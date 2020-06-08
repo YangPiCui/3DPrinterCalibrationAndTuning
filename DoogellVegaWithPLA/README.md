@@ -70,51 +70,47 @@ existing value * desired value / actual value = corrected value
 X = 80 * .99840 = 79.872;  
 Y = 80 * 1.00334 = 80.267;  
 Z = 400 * 1.0019 = 400.76;  
+  
+Use [these G-codes](CalibrateXYZStepsPerMm.gcode) to save the corrected values.  
 
-Use [these G-codes](CalibrateXYZStepsPerMm.gcode) to save the corrected values.
-
-### Calibrate Extruder Steps per mm (E) ([reference](https://mattshub.com/blog/2017/04/19/extruder-calibration))
-existing value * desired value / actual value = corrected value
-1st Run: 95.8 * 100 / 54 = 177.4;
-2nd Run: 177.4 * 100 / 104 = 170.577;
-
-Use [these G-codes](CalibrateExtruderStepsPerMm.gcode) to calibrate and save the corrected values.
-
-### Set Constants
-These constant parameter(s) are chosen and set for production print:
-Layer height = 0.1mm; //set equal to XY resolution
-Load default cura profile "Fine", which has a layer height of 0.1mm.
-
-
-
-
+### Calibrate Extruder Steps per mm (E) ([reference](https://mattshub.com/blog/2017/04/19/extruder-calibration))  
+existing value * desired value / actual value = corrected value  
+1st Run: 95.8 * 100 / 54 = 177.4;  
+2nd Run: 177.4 * 100 / 104 = 170.577;  
+  
+Use [these G-codes](CalibrateExtruderStepsPerMm.gcode) to calibrate and save the corrected values.  
+  
+### Set Constants  
+These constant parameter(s) are chosen and set for production print:  
+Layer height = 0.1mm; //set equal to XY resolution  
+Load default cura profile "Fine", which has a layer height of 0.1mm.  
+  
 ## Part 2: Multi-Parameter Optimization
-
-Iterate in the following order to home in on the best values. Skip sections which will have been well optimized.
-
-int outerIteration{0};  // iteration number 0, 1, 2, 3... etc.
-### Tune Print Speed ([reference](https://all3dp.com/2/3d-printing-speed-optimal-settings/) | [reference](https://www.thingiverse.com/thing:1586548))
-if (outerIteration == 0) // if it's the first time running this subsection
-{
-    Print Speed = 50;
-}
-else
-{
-	ChangeAtZ
-	Layer No = 1  | Extruder 1 Temp = 195 
-	Layer No = 48 | Extruder 1 Temp = 200
-	Layer No = 98 | Extruder 1 Temp = 205
-	... (10 layers total)
-	Alter print speed only at 12.5 mm
-}
-
+Iterate in the following order to home in on the best values. Skip sections which will have been well optimized.  
+  
+int outerIteration{0};  // iteration number 0, 1, 2, 3... etc.  
+### Tune Print Speed ([reference](https://all3dp.com/2/3d-printing-speed-optimal-settings/) | [reference](https://www.thingiverse.com/thing:1586548))  
+if (outerIteration == 0) // if it's the first time running this subsection  
+{  
+    Print Speed = 50;  
+}  
+else  
+{  
+    ChangeAtZ
+    Layer No = 1  | Extruder 1 Temp = 195 
+    Layer No = 48 | Extruder 1 Temp = 200
+    Layer No = 98 | Extruder 1 Temp = 205
+    ... (10 layers total)
+    Alter print speed only at 12.5 mm
+}  
+  
 ### Tune First Layer 
-[reference](https://www.youtube.com/watch?v=pAFDEn3wGYo)
-Initial Layer Speed = 20mm/s
-Combing Mode = Not in Skin
-Max Comb Distance With No Retract = 15mm
-Z Offset = -0.2mm ([reference](https://all3dp.com/2/cura-z-offset-simply-explained/))
-
+[reference](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
+Initial Layer Speed = 20mm/s;  
+Combing Mode = Not in Skin;  
+Max Comb Distance With No Retract = 15mm;  
+Z Offset = -0.2mm; //[reference](https://all3dp.com/2/cura-z-offset-simply-explained/)  
+  
 ### Tune Hotend Temperature ([reference](https://e3d-online.dozuki.com/Guide/Calibrating+Printing+temperature/91))
 Use the [Smart compact temperature calibration Tower](https://www.thingiverse.com/thing:2729076)
 In Preferences, disable "Ensure models are kept apart" and "Automatically drop models to the build plate".
