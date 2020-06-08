@@ -1,27 +1,49 @@
-# 3DPrinterCalibrationAndTuning
 
-======================
-== 0. Setup Printer and Material ==
-======================
-Level Bed.
+# Doogell Vega Calibration and Tuning
+Bought 2nd hand for $500. 
+Greased rails. Cleaned belt and belt housing. 
+Replaced bed cover with tempered sanded-surface glass.
+Pressed printer frame against wall to steady the former.
+Use Cura 4.6.1 as the slicer software.
 
-Measure XYZ Travel.
+### 3D Printer Specification
+CoreXY structure, Linear XY Rails
+X/Y resolution: 0.1mm
+Z resolution: (<=0.1 mm)
+
 X direction: ↓, X range: 0-250 
-Y direction: →, Y range: 0-293 (Binding occurs at 294)
+Y direction: →, Y range: 0-293 (Belt starts to slip at 294)
 Z direction: up, Z range: 0-300
+Rectangular, Heated bed, G-code flavor: RepRap
 
-Measure Printhead Diameter: 0.4mm
-Filament Material: PLA
-Measure Filament Diameter: 1.7mm
-Set Set Start and End G-code
+Printhead: ([value definition](https://community.ultimaker.com/topic/18484-printhead-settings/)) 
+X min: -37 (measured in the negative x direction)
+Y min -107 (measured in the negative y direction)
+X max: 37 (measured in the positive x direction)
+Y max: 37 (measured in the positive y direction)
+Gantry Height: 80mm (the lowest point on the rails in which the extruder assembly rides to the print bed when the nozzle is at height Z=0)
 
-===================================
-== 1. Calibrate XYZ Steps per mm ==
-===================================
+Extruder 1:
+Nozzle size: 0.4mm, Compatible material diameter: 1.75 mm
+
+### [The Start and End G-code](StartAndEndG-code.txt)
+
+### Material Used
+Filament Material: Generic PLA
+Filament Diameter: 1.7mm 
+Default Printing Temperature: 217 Degree Celsius (after rough temperature optimization)
+Default Build Plate Temperature: 70 Degree Celsius (per online recommendation)
+Retraction Distance: 6 mm (after rough observation)
+Retraction Speed: 25 mm/s (from Ender 3 setting)
+
+
+## Single-Parameter Optimization
+
+Level bed first.
+
+### 1. Calibrate XYZ Steps per mm 
 Default steps/mm:
-X&Y 80
-Z 400
-E 95.8
+X&Y 80, Z 400, E 95.8
 
 X axis: 
 [Y = 0, Z = 3], intended travel: 250mm, actual: 250.2mm
@@ -36,7 +58,7 @@ Y axis:
 Z axis: Scale Model by 1.0019
 [X = 0, Y = 0], intended travel: 297mm, actual: 296.2mm
 [X = 0, Y = 300], intended travel: 297mm, actual: 296.5mm 
-[X = 125, Y = 150], intended travel: 297mm, actual: 297mm <- Take the average of all measurements
+[X = 125, Y = 150], intended travel: 297mm, actual: 297mm <- Average of all measurements
 [X = 250, Y = 0], intended travel: 297mm, actual: 296.2mm
 [X = 250, Y = 300], intended travel: 297mm, actual: 296.25mm
 
@@ -45,36 +67,19 @@ X: 80 * .99840 = 79.872
 Y: 80 * 1.00334 = 80.267
 Z: 400 * 1.0019 = 400.76
 
-
-==================================
-== 2. Measure Filament Diameter ==
-==================================
-1.7 mm
-
-
-========================================
-== 3. Calibrate Extruder Steps per mm ==
-========================================
-existing extruder steps per mm * Desired extruded distance / actual extruded distance = corrected extruder steps per mm:
+### 2. Calibrate Extruder Steps per mm (E)
+existing value * desired value / actual value = corrected value
 1st Run: 95.8 * 100 / 54 = 177.4
 2nd Run: 177.4 * 100 / 104 = 170.577 
 
 
 
-
-
-
-
-
-=====================================
-== 4. Choose Print Parameters ==
-=====================================
+## Multi-Parameter Optimization
+Choose / set constant parameters:
 Layer Height: 0.1mm (equal to XY resolution)
 
 
-=====================================
-== 5. Calibrate Hotend and Bed Temperature ==
-=====================================
+### 5. Optimize Hotend Temperature 
 https://e3d-online.dozuki.com/Guide/Calibrating+Printing+temperature/91
 
 ChangeAtZ
