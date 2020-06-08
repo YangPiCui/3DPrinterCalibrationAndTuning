@@ -10,7 +10,7 @@ M18 S0     ;disable stepper motor idle timeout for glass bed
 
 M92 E170.577                    ;set extruder steps/mm
 M92 X79.872 Y80.267 Z400.76     ;set XYZ steps/mm
-M301 P11 I2.5 D100              ;set hotend PID
+M301 P11 I2.75 D100              ;set hotend PID
 M500                            ;save calibrated steps/mm and PID
 
 ;M109 S{print_temperature} ;heat hot end to this temperature and wait
