@@ -2,10 +2,11 @@
 
 # Doogell Vega Calibration and Tuning
 
-Bought 2nd hand for $500.   
+Bought 2nd hand for $500.   Imported stepper motors and linear rails.
 Greased rails. Cleaned belt and belt housing.  
 Replaced bed cover with tempered sanded-surface glass.  
 Pressed printer frame against wall to steady the former.  
+Touch screen is inaccurate to the touch. One cannot change firmware values with it.  
 Use Cura 4.6.1 as the slicer software.  
   
 In a multi-parameter optimization, if one parameter changes, multiple other parameters have to change, too. For example, if we change the layer height, the print speed and the flow rate both have to change (in an unpredictable manner) to ensure the same print accuracy. Fixing as many parameters as possible upfront would simply the optimization.
@@ -46,7 +47,7 @@ Retraction Speed = 25mm/s; //Generic Default
   
 ### Calibrate XYZ Steps per mm ([reference](https://www.youtube.com/watch?v=W4CsD5lRvHY&feature=emb_logo))  
   
-Default steps/mm  
+Default steps/mm  (Machine LCD screen under "Advanced Settings")
 X&Y = 80; Z = 400; E = 95.8;  
   
 X axis  
@@ -71,7 +72,7 @@ X = 80 * .99840 = 79.872;
 Y = 80 * 1.00334 = 80.267;  
 Z = 400 * 1.0019 = 400.76;  
   
-Use [these G-codes](CalibrateXYZStepsPerMm.gcode) to save the corrected values.  
+Doogell Vega has no accessible console. Use [these G-codes](CalibrateXYZStepsPerMm.gcode) to save the corrected values.  
 
 ### Calibrate Extruder Steps per mm (E) ([reference](https://mattshub.com/blog/2017/04/19/extruder-calibration))  
 existing value * desired value / actual value = corrected value  
@@ -84,112 +85,91 @@ Use [these G-codes](CalibrateExtruderStepsPerMm.gcode) to calibrate and save the
 These constant parameter(s) are chosen and set for production print:  
 Layer height = 0.1mm; //set equal to XY resolution  
 Load default cura profile "Fine", which has a layer height of 0.1mm.  
+Optimize Wall Printing Order = True;  //[reference](https://www.youtube.com/watch?v=sAZpnlzCwiU)  
+Print Thin Walls = True;  
+Infill Pattern = Gyroid;  //increased strength for the lowest weight. [reference](https://support.ultimaker.com/hc/en-us/articles/360012607079-Infill-settings)  
   
 ## Part 2: Multi-Parameter Optimization
 Iterate in the following order to home in on the best values. Skip sections which will have been well optimized.  
-   
-### Tune Print Speed ([reference](https://all3dp.com/2/3d-printing-speed-optimal-settings/) | [reference](https://www.thingiverse.com/thing:1586548))  
-
-The goal is to find the highest printing speed without sacrificing quality.  
-
-If it's the first time running this subsection:  
-Print Speed = 50;  
-Print Acceleration = 1500mm/s^2;  
-Print Jerk = 20 mm/s;  
-
-For subsequent iterations:  
-ChangeAtZ  
-Layer No = 1; Extruder 1 Temp = 195  
-Layer No = 48; Extruder 1 Temp = 200  
-Layer No = 98; Extruder 1 Temp = 205  
-... (10 layers total)  
-Alter print speed only at 12.5 mm  
+#### Tune First Layer ([reference](https://www.youtube.com/watch?v=pAFDEn3wGYo))
+Iteration 0:  
+Initial Layer Speed = 20mm/s; (final)  
+Combing Mode = Not in Skin; (final)   
+Max Comb Distance With No Retract = 15mm; (final)  
+Z Offset = -0.2mm; //[reference](https://all3dp.com/2/cura-z-offset-simply-explained/) 
   
-### Tune First Layer 
-[reference](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
-If it's the first time running this subsection:  
-Initial Layer Speed = 20mm/s;  
-Combing Mode = Not in Skin;  
-Max Comb Distance With No Retract = 15mm;  
-Z Offset = -0.2mm; //[reference](https://all3dp.com/2/cura-z-offset-simply-explained/)  
+Iteration 1: 
+Z Offset = -0.1mm (final)  
   
-For subsequent iterations:  
-adjust the Z Offset  
-    
-### Tune Hotend Temperature ([reference](https://e3d-online.dozuki.com/Guide/Calibrating+Printing+temperature/91))
-Use the [Smart compact temperature calibration Tower](https://www.thingiverse.com/thing:2729076)  
-In Preferences, disable "Ensure models are kept apart" and "Automatically drop models to the build plate".  
-Scale the models down to save costs. Stack them on top of each other. Use "Extensions" -> "Post Processing" -> "ChangeAtZ" to set the temperatures.  
+#### Tune Print Speed ([reference](https://all3dp.com/2/3d-printing-speed-optimal-settings/) | [reference](https://www.thingiverse.com/thing:1586548))  
+Achieve the highest possible speed with intended quality.
+
+Iteration 0:  
+Print Speed = 50; Print Acceleration = 1500mm/s^2; Print Jerk = 20mm/s;  
+Iteration 1:
+Print Speed = 40; Print Acceleration = 750mm/s^2; Print Jerk = 10mm/s;  
+Iteration 2:  
+Print Speed = 60; Print Acceleration = 700mm/s^2; Travel Acceleration = 1400 mm/s^2; Print Jerk = 5mm/s;  Travel jerk = 10mm/s;  
+  
+#### Tune Hotend Temperature ([reference](https://e3d-online.dozuki.com/Guide/Calibrating+Printing+temperature/91))(https://matterhackers.dozuki.com/Guide/PID+Tuning/6)) | [reference](https://reprap.org/wiki/PID_Tuning) | [reference]([https://reprap.org/wiki/G-code#M928:_Start_SD_logging](https://reprap.org/wiki/G-code#M928:_Start_SD_logging))) 
+
+Stack the [Smart compact temperature calibration Towers](https://www.thingiverse.com/thing:2729076)   on top of each other in Cura. Use "Extensions" -> "Post Processing" -> "ChangeAtZ" to set the temperatures.  
+  
+Iteration 0:  
+Printing Temperature = 200;
 Infill = 15%;  
 Support = No;  
+Flow Rate = 45.44; //I have previously calibrated the flow rate at 217 Celsius.  
 [Save the Cura project](CFFFP_SmartTemperatureTower_195-230.3mf);  
-Slice and print;  
+Slice and 3D-print!  
+  
+Iteration 2: 
+Printing Temperature = 215 Celsius;  
+
+#### Tune PID ([reference](https://reprap.org/wiki/PID_Tuning))
+The printer can't display PID auto tuning results on the LCD touch screen. Neither does it log to SD card. Integrate [these G-codes](TuneAndLogTemperaturePID.gcode) into the Start G-code in Cura to set and save temperature PID manually. 
+Iteration 0:  
+Default PID: P = 10; I = 2.5; D = 100; (Machine LCD screen under "Advanced Settings")  
+Iteration 2:  
+Default PID: P = 11; I = 2.5; D = 100;  
 
 
-Optimal hotend temperature = 217 Celsius.
-
-Adjust retraction speed and distance.
-
-Tune PID ([reference](https://www.3dhubs.com/talk/t/howto-calibrate-tune-and-fine-tune-your-printer-and-filament/5695))
 
 
 
 
 
 
-### Calibrate Flow Rate 
-https://www.thingiverse.com/thing:3397997
-https://e3d-online.dozuki.com/Guide/Flow+rate+(Extrusion+multiplier)+calibration+guide./89
-Line Width = 0.48 (1.2 * nozzle diameter for die swell. Use this to calibrate flow rate)
 
+
+
+
+
+
+
+
+
+
+
+
+#### Calibrate Flow Rate (Extruder Multiple)  ([reference](https://e3d-online.dozuki.com/Guide/Flow+rate+%28Extrusion+multiplier%29+calibration+guide./89) | [reference](https://www.thingiverse.com/thing:3397997))  
+Pick the calibration model matching the nozzle size.
+Line Width = 0.4;  //same as nozzle size
+Infill Density = 0;
+  
 Existing flow rate * Desired wall thickness / actual wall thickness = corrected flow rate
-1th Run
-41.18 * .96 / .87 = 45.44
-
-Flow rate = 40.34 (perfect for a layer height of 0.2mm)
+Iteration 0: 41.18 * .8 / .87 = 45.44
 
 
+Flow rate = 40.34; //(perfect for speed = 50mm/s and layer height = 0.2mm)
+  
+#### Test with "All in One 3D Printer Test Micro" ([reference](https://www.thingiverse.com/thing:2975429))  
+Rafts = No; Supports = No; Infill = 30%;  
 
 
-
-============================
-== Optimize Acceleration Control and Jerk Control ==
-============================
-
-
-
-============================
-== All in one 3D printer test micro ==
-============================
-https://www.thingiverse.com/thing:2975429
-small tip : try printing this with thing walls enabled in your slicer so you can get better tolerance results!
-
-Rafts =
-No
-
-Supports =
-No
-
-Resolution =
-0.05-0.2 lh
-
-Infill =
-30%
-
-
-
-================================
-== Other Parameters Optimized ==
-================================
-Layer Height = 0.1mm (vertical resolution)
-Line Width = 0.48 (1.2 * nozzle diameter)
-Print Speed = 50 mm/s
-Travel Speed = 200 mm/s
-Printing Temperature Initial Layer = Printing Temperature * 1.05
-Build Plate Temperature Iniatil Layer = Build Plate Temperature * 1.05
-
-
-Retraction Distance = 6 mm
-Retraction Speed = 25 mm/s
-Infill Pattern = Gyroid infill
-Gradual infill steps
+#### Rectraction
+  
+### Optimize Other Parameters
+Line Width = .48; //(1.2 * nozzle diameter for die swell. Use this to calibrate flow rate)
+Wall Line Count = 4; //3-4 for good strength. Max strength with 5-6 lines and 20-30% infill. [reference](https://www.youtube.com/watch?v=sAZpnlzCwiU)  
+Infill = 15; 
