@@ -87,43 +87,43 @@ Load default cura profile "Fine", which has a layer height of 0.1mm.
   
 ## Part 2: Multi-Parameter Optimization
 Iterate in the following order to home in on the best values. Skip sections which will have been well optimized.  
-  
-int outerIteration{0};  // iteration number 0, 1, 2, 3... etc.  
+   
 ### Tune Print Speed ([reference](https://all3dp.com/2/3d-printing-speed-optimal-settings/) | [reference](https://www.thingiverse.com/thing:1586548))  
-if (outerIteration == 0) // if it's the first time running this subsection  
-{  
-    Print Speed = 50;  
-}  
-else  
-{  
-    ChangeAtZ
-    Layer No = 1  | Extruder 1 Temp = 195 
-    Layer No = 48 | Extruder 1 Temp = 200
-    Layer No = 98 | Extruder 1 Temp = 205
-    ... (10 layers total)
-    Alter print speed only at 12.5 mm
-}  
+
+The goal is to find the highest printing speed without sacrificing quality.  
+
+If it's the first time running this subsection:  
+Print Speed = 50;  
+Print Acceleration = 1500mm/s^2;  
+Print Jerk = 20 mm/s;  
+
+For subsequent iterations:  
+ChangeAtZ  
+Layer No = 1; Extruder 1 Temp = 195  
+Layer No = 48; Extruder 1 Temp = 200  
+Layer No = 98; Extruder 1 Temp = 205  
+... (10 layers total)  
+Alter print speed only at 12.5 mm  
   
 ### Tune First Layer 
 [reference](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
+If it's the first time running this subsection:  
 Initial Layer Speed = 20mm/s;  
 Combing Mode = Not in Skin;  
 Max Comb Distance With No Retract = 15mm;  
 Z Offset = -0.2mm; //[reference](https://all3dp.com/2/cura-z-offset-simply-explained/)  
   
+For subsequent iterations:  
+adjust the Z Offset  
+    
 ### Tune Hotend Temperature ([reference](https://e3d-online.dozuki.com/Guide/Calibrating+Printing+temperature/91))
-Use the [Smart compact temperature calibration Tower](https://www.thingiverse.com/thing:2729076)
-In Preferences, disable "Ensure models are kept apart" and "Automatically drop models to the build plate".
-Scale the models down to save costs. Stack them on top of each other. Use "Extensions" -> "Post Processing" -> "ChangeAtZ" to set the temperatures.
-Infill = 15%
-Support = No
-
-(start tuning acceleration and jerk control)
-Print Acceleration = 1500 mm/s^2 
-Print Jerk = 20 mm/s
-
-[Save the Cura project](CFFFP_SmartTemperatureTower_195-230.3mf).
-Slice and print.
+Use the [Smart compact temperature calibration Tower](https://www.thingiverse.com/thing:2729076)  
+In Preferences, disable "Ensure models are kept apart" and "Automatically drop models to the build plate".  
+Scale the models down to save costs. Stack them on top of each other. Use "Extensions" -> "Post Processing" -> "ChangeAtZ" to set the temperatures.  
+Infill = 15%;  
+Support = No;  
+[Save the Cura project](CFFFP_SmartTemperatureTower_195-230.3mf);  
+Slice and print;  
 
 
 Optimal hotend temperature = 217 Celsius.
