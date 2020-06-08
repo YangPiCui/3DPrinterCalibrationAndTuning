@@ -1,0 +1,42 @@
+;Start of Printer G-code
+;Sliced at: {day} {date} {time}
+;Basic settings: Layer height: {layer_height} Walls: {wall_thickness} Fill: {fill_density}
+;Print time: {print_time}
+;Filament used: {filament_amount}m {filament_weight}g
+;Filament cost: {filament_cost}
+
+M17        ;enable stepper motor idle hold for glass bed
+M18 S0     ;disable stepper motor idle timeout for glass bed
+
+M92 E170.577                    ;set extruder steps/mm
+M92 X79.872 Y80.267 Z400.76     ;set XYZ steps/mm
+M500                            ;save calibrated steps/mm
+
+;M109 S{print_temperature} ;heat hot end to this temperature and wait
+;M190 S{print_bed_temperature} ;heat bed to this temperature and wait
+G21        ;metric values
+G90        ;absolute positioning
+M82        ;absolute extrusion mode
+M107       ;start with the fan off
+
+G28		           ;performe homing routine
+G92 E0             ;reset the extruder position to 0mm
+G1 F120            ;set feedrate to 100mm/minute
+G1 Z30 E15 F100    ;move the plateform down 30mm while ejecting some waste material
+G92 E0
+
+
+
+
+
+
+
+;End of Printer G-code
+M104 S0                                ;turn off heating the extruder
+M140 S0                                ;turn off heating the bed
+G90									   ;set to absolute positioning
+G0 Z300                                ;lower the bed completely for glass bed
+G28 X Y                                ;move hot end to home position
+M84                                    ;turn off stepper motors
+;{profile_string}
+

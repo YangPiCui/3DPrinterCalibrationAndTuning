@@ -1,0 +1,161 @@
+======================
+== 0. Setup Printer and Material ==
+======================
+Level Bed.
+
+Measure XYZ Travel.
+X direction: ↓, X range: 0-250 
+Y direction: →, Y range: 0-293 (Binding occurs at 294)
+Z direction: up, Z range: 0-300
+
+Measure Printhead Diameter: 0.4mm
+Filament Material: PLA
+Measure Filament Diameter: 1.7mm
+Set Set Start and End G-code
+
+===================================
+== 1. Calibrate XYZ Steps per mm ==
+===================================
+Default steps/mm:
+X&Y 80
+Z 400
+E 95.8
+
+X axis: 
+[Y = 0, Z = 3], intended travel: 250mm, actual: 250.2mm
+[Y = 150, Z = 3], intended travel: 250mm, actual: 250.4mm <- Scale Model by .99840
+[Y = 300, Z = 3], intended travel: 250mm, actual: 250.4mm
+
+Y axis: 
+[X = 0, Z = 3], intended travel: 300mm, actual: 297.5mm
+[X = 125, Z = 3], intended travel: 300mm, actual: 299mm <- Scale Model by 1.00334
+[X = 250, Z = 3], intended travel: 300mm, actual: 298mm
+
+Z axis: Scale Model by 1.0019
+[X = 0, Y = 0], intended travel: 297mm, actual: 296.2mm
+[X = 0, Y = 300], intended travel: 297mm, actual: 296.5mm 
+[X = 125, Y = 150], intended travel: 297mm, actual: 297mm <- Take the average of all measurements
+[X = 250, Y = 0], intended travel: 297mm, actual: 296.2mm
+[X = 250, Y = 300], intended travel: 297mm, actual: 296.25mm
+
+existing value * desired value / actual value = corrected value
+X: 80 * .99840 = 79.872
+Y: 80 * 1.00334 = 80.267
+Z: 400 * 1.0019 = 400.76
+
+
+==================================
+== 2. Measure Filament Diameter ==
+==================================
+1.7 mm
+
+
+========================================
+== 3. Calibrate Extruder Steps per mm ==
+========================================
+existing extruder steps per mm * Desired extruded distance / actual extruded distance = corrected extruder steps per mm:
+1st Run: 95.8 * 100 / 54 = 177.4
+2nd Run: 177.4 * 100 / 104 = 170.577 
+
+
+
+
+
+
+
+
+=====================================
+== 4. Choose Print Parameters ==
+=====================================
+Layer Height: 0.1mm (equal to XY resolution)
+
+
+=====================================
+== 5. Calibrate Hotend and Bed Temperature ==
+=====================================
+https://e3d-online.dozuki.com/Guide/Calibrating+Printing+temperature/91
+
+ChangeAtZ
+Layer No: 1  | Extruder 1 Temp: 195 
+Layer No: 48 | Extruder 1 Temp: 200
+Layer No: 98 | Extruder 1 Temp: 205
+... (10 layers total)
+
+Hotend: 217 Celsius
+Bed: 70 Celsius (recommended temperature)
+
+
+============================
+== 6. Calibrate Print Speed ==
+============================
+https://all3dp.com/2/3d-printing-speed-optimal-settings/
+https://www.thingiverse.com/thing:1586548
+Print Speed: 50 mm/s 
+
+ChangeAtZ
+Layer No: 1  | Extruder 1 Temp: 195 
+Layer No: 48 | Extruder 1 Temp: 200
+Layer No: 98 | Extruder 1 Temp: 205
+... (10 layers total)
+Alter print speed only at 12.5 mm
+
+
+
+
+============================
+== 5. Calibrate Flow Rate ==
+============================
+https://www.thingiverse.com/thing:3397997
+https://e3d-online.dozuki.com/Guide/Flow+rate+(Extrusion+multiplier)+calibration+guide./89
+Line Width: 0.48 (1.2 * nozzle diameter for die swell. Use this to calibrate flow rate)
+
+Existing flow rate * Desired wall thickness / actual wall thickness = corrected flow rate:
+.2 layer height: 40.34
+1th Run: 41.18 * .96 / .87 = 45.44
+
+
+
+
+
+
+============================
+== Optimize Acceleration Control and Jerk Control ==
+============================
+
+
+
+============================
+== All in one 3D printer test micro ==
+============================
+https://www.thingiverse.com/thing:2975429
+small tip : try printing this with thing walls enabled in your slicer so you can get better tolerance results!
+
+Rafts:
+No
+
+Supports:
+No
+
+Resolution:
+0.05-0.2 lh
+
+Infill:
+30%
+
+
+
+================================
+== Other Parameters Optimized ==
+================================
+Layer Height: 0.1mm (vertical resolution)
+Line Width: 0.48 (1.2 * nozzle diameter)
+Print Speed: 50 mm/s
+Travel Speed: 200 mm/s
+Printing Temperature Initial Layer: Printing Temperature * 1.05
+Build Plate Temperature Iniatil Layer: Build Plate Temperature * 1.05
+
+
+Retraction Distance: 6 mm
+Retraction Speed: 25 mm/s
+Infill Pattern: Gyroid infill
+Gradual infill steps
