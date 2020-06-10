@@ -96,39 +96,35 @@ These constant parameter(s) are chosen and set for production print:
 > Print Thin Walls = True;  
   
 ## Part 2: Multi-Parameter Optimization
-Iterate in the following order to tune in on the best values. Skip tuning sections which will have been well optimized.  
-
-
-
-  
-#### Tune Print Speed, Acceleration and Jerk Control ([reference](https://all3dp.com/2/3d-printing-speed-optimal-settings/) | [reference](https://www.thingiverse.com/thing:1586548))  
+Print and iterate in the following order to tune in on the best values.  
+### 1. Tune Print Speed, Acceleration and Jerk Control ([reference](https://all3dp.com/2/3d-printing-speed-optimal-settings/) | [reference](https://www.thingiverse.com/thing:1586548))  
 Achieve the highest speed without sacrificing quality.
-> Print Speed = 35; //This is the printer's max speed as manually measured. It's already very slow.  
+> Print Speed = 35; //This is the printer's max speed as manually measured. It's slow already.  
 > 
-Iteration 0  
+[Print 0]  
 Print Acceleration = 70mm/s^2; //Achieves full speed in 0.5 seconds. 
 Travel Acceleration = 70mm/s^2;  
 Print Jerk = 1mm/s;  
 Travel jerk = 1mm/s;  
 
-#### Tune Build Plate Adhesion and First Layers
+### 2. Tune Build Plate Adhesion and First Layers
 
-Iteration 0  
+[Print 0]  
 Default Build Plate Temperature = 75;  [Correct elephant foot and print edge bending.](https://all3dp.com/1/common-3d-printing-problems-troubleshooting-3d-printer-issues/)
 Z Offset = -0.1mm; //[cura z offset simply explained](https://all3dp.com/2/cura-z-offset-simply-explained/)  
 
 
-#### Tune Hotend PID ([reference](https://reprap.org/wiki/PID_Tuning))
+### 3. Tune Hotend PID ([reference](https://reprap.org/wiki/PID_Tuning))
 The printer can't display PID auto tuning results on the LCD touch screen. Neither does it log to SD card. Integrate [these G-codes](TuneAndLogTemperaturePID.gcode) into the Start G-code in Cura to set and save temperature PID manually. 
 Default PID: P = 10; I = 2.5; D = 100; (Machine LCD screen under "Advanced Settings")  
-Iteration 0:  
+[Print 0]  
 Default PID: P = 10.5; I = 2.5; D = 105;  
 
-#### Tune Hotend Temperature ([reference](https://e3d-online.dozuki.com/Guide/Calibrating+Printing+temperature/91))(https://matterhackers.dozuki.com/Guide/PID+Tuning/6)) | [reference](https://reprap.org/wiki/PID_Tuning) | [reference]([https://reprap.org/wiki/G-code#M928:_Start_SD_logging](https://reprap.org/wiki/G-code#M928:_Start_SD_logging))) 
+### 4. Tune Hotend Temperature ([reference](https://e3d-online.dozuki.com/Guide/Calibrating+Printing+temperature/91))(https://matterhackers.dozuki.com/Guide/PID+Tuning/6)) | [reference](https://reprap.org/wiki/PID_Tuning) | [reference]([https://reprap.org/wiki/G-code#M928:_Start_SD_logging](https://reprap.org/wiki/G-code#M928:_Start_SD_logging))) 
 
 Stack the [Smart compact temperature calibration Towers](https://www.thingiverse.com/thing:2729076)   on top of each other in Cura. Use "Extensions" -> "Post Processing" -> "ChangeAtZ" to set the temperatures.  
   
-Iteration 0:  
+[Print 0]  
 Printing Temperature = 200 Celsius;  
 Infill = 15%;  
 Flow Rate = 40.34; //from earlier calibration  
@@ -139,29 +135,31 @@ Support = No;
   
 
 
-#### Calibrate Flow Rate (Extruder Multiple)  ([reference](https://e3d-online.dozuki.com/Guide/Flow+rate+%28Extrusion+multiplier%29+calibration+guide./89) | [understand line width](https://dyzedesign.com/2018/07/3d-print-speed-calculation-find-optimal-speed/#:~:text=A%20general%20rule%20of%20thumb,bigger%20nozzles%20and%20layer%20height.))  
+### 5. Calibrate Flow Rate (Extruder Multiple)  ([reference](https://e3d-online.dozuki.com/Guide/Flow+rate+%28Extrusion+multiplier%29+calibration+guide./89) | [understand line width](https://dyzedesign.com/2018/07/3d-print-speed-calculation-find-optimal-speed/#:~:text=A%20general%20rule%20of%20thumb,bigger%20nozzles%20and%20layer%20height.))  
 Minimum Line Width = Nozzle Size + Layer Height;  
 Maximum Line Width = Nozzle Flat Size + Layer Height;  
 Line Width = 0.6;  
 Infill Density = 0;  
+Top Layers = Bottom Layers = 0; //default 4  
+Build Plate Adhesion Type = Brim;  
   
 Existing flow rate * Desired wall thickness / actual wall thickness = corrected flow rate
-Iteration 0: 
+[Print ]  
 
 
 
 
-#### Tune Retraction to Minimize Stringing ([reference](https://all3dp.com/2/3d-print-stringing-easy-ways-to-prevent-it/))
-Only use retraction when needed.  This saves time and eases the load on the Z axis stepper motor.
+### 6. Tune Retraction to Minimize Stringing ([reference](https://all3dp.com/2/3d-print-stringing-easy-ways-to-prevent-it/))
 Iteration :  
 Retraction Distance = 6.5mm;  
 Retraction Speed = 25mm/s; //Same as Print Speed  
-Z Hop When Retracted = true;  
-Z Hop Only Over Printed Parts = true;  
-Z Hop Height = 0.6mm; //3 times the layer height <= height <= 1mm;
+>Z Hop When Retracted = true;  
+> Z Hop Only Over Printed Parts = true;  
 
-#### Print "All in One 3D Printer Test Micro" ([reference](https://www.thingiverse.com/thing:2975429))  
-Supports = No; 
+Z Hop Height = 0.4mm; //a multiple of the Z step size (0.04mm). 3 times the layer height <= height <= 1mm;  
+
+#### 7. All in One 3D Printer Test  ([reference](https://www.thingiverse.com/thing:2975429))  
+Supports = No;  
 >Wall Line Count = 4; //[3-4 for good strength. Max strength with 5-6 lines and 20-30% infill.](https://www.youtube.com/watch?v=sAZpnlzCwiU)  
 >Infill = 15%;  
    
