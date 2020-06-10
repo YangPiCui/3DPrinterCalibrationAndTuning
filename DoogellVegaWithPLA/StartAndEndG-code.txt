@@ -36,7 +36,7 @@ G92 E0
 M104 S0                                ;turn off heating the extruder
 M140 S0                                ;turn off heating the bed
 G90									   ;set to absolute positioning
-G0 Z300                                ;lower the bed completely for glass bed
+;G0 Z300                               ;lower the bed completely
 G28 X Y                                ;move hot end to home position
 M84                                    ;turn off stepper motors
 ;{profile_string}
