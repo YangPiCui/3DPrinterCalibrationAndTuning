@@ -148,8 +148,7 @@ Build Plate Adhesion = None;
 
   
 ### 5. Flow Rate (Extruder Multiple) - 3D Print Here!  ([reference](https://e3d-online.dozuki.com/Guide/Flow+rate+%28Extrusion+multiplier%29+calibration+guide./89))  
-[FlowRateCalibration.3mf](CalibrationObjects/FlowRateCalibration.3mf)  
-Make sure you import the models only (without importing profiles)!
+[FlowRateCalibration.3mf](CalibrationObjects/FlowRateCalibration.3mf) Make sure you import the models only (without importing profiles)!  
 Wall Line Count = 2; //default 1  
 Top Layers = Bottom Layers = 0; //default 4  
 Infill Density = 0;  
@@ -158,14 +157,12 @@ Build Plate Adhesion Type = Brim;
 Corrected Flow Rate = Existing flow rate * Desired wall thickness / actual wall thickness
 > Flow = 96;
 (https://all3dp.com/1/common-3d-printing-problems-troubleshooting-3d-printer-issues/)  
-> Initial Layer Height = 0.16; // <80% of nozzle size
-> Initial Layer Flow = 96;  
+> Initial Layer Height = 0.16; // <80% of nozzle size  
 > Z Offset = -0.0mm; //[cura z offset simply explained](https://all3dp.com/2/cura-z-offset-simply-explained/)  
 
 
 ### 7. Horizontal Expansion - 3D Print Here! ([reference](https://www.youtube.com/watch?v=UUelLZvDelU) | [reference](https://bradshacks.com/3d-printing-tolerancing/))
-[HorizontalExpansionCalibration.3mf](CalibrationObjects/HorizontalExpansionCalibration.3mf)  
-Import model only!
+[HorizontalExpansionCalibration.3mf](CalibrationObjects/HorizontalExpansionCalibration.3mf) Import model only!  
 > Wall Line Count = Top Layers = Bottom Layers = 6; //[3-4 for good strength. Max strength with 5-6 lines and 20-30% infill.](https://www.youtube.com/watch?v=sAZpnlzCwiU)  
 > Infill = 30%;  
 > Connect Infill Lines;  
@@ -174,8 +171,8 @@ Import model only!
 > Build Plate Adhesion = Skirt;  
 > Skirt Distance = 5mm;  
 > Skirt Minimum Length = 50mm;  
-> Horizontal Expansion = -0.04;
-> Hole Horizontal Expansion = 0.25;
+> Horizontal Expansion = Initial Layer Horizontal Expansion = -0.04;  
+> Hole Horizontal Expansion = 0.2;  
 
 
 ### 8. Other Test Parts
