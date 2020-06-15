@@ -1,0 +1,111 @@
+NX Nastran V12.1 (Intel64 Family 6 Model 158 Stepping 13 Windows 10  ) Control File:
+-------------------------------------------------------------------
+Nastran BUFFSIZE=32769 $(c:/program files/siemens/nx 12.0/nxnastran/conf/nast12.rcf[1])
+Nastran BUFFPOOL=20.0X $(c:/program files/siemens/nx 12.0/nxnastran/conf/nast12.rcf[4])
+Nastran DIAGA=128 DIAGB=0 $(c:/program files/siemens/nx 12.0/nxnastran/conf/nast12.rcf[8])
+Nastran SYSTEM(442)=2 $(command line[5])
+Nastran REAL=2135293952 $(Memory limit for MPI and other specialized modules)
+JID='C:\Users\Yang\Desktop\YangsFiles\Projects\3DPrinterCalibrationAndTuning\DoogellVegaGlassBedSupport\plateholder_sim-solution_1.dat'
+OUT='./plateholder_sim-solution_1'
+MEM=961589248
+MACH='Intel64 Family 6 Model 158 Stepping 13'
+OPER='Windows 10'
+OSV=' '
+MODEL='Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz (SegotepLux)'
+CONFIG=8666
+NPROC=16
+symbol=DELDIR='c:/program files/siemens/nx 12.0/nxnastran/nxn12p01/nast/del' $(program default)
+symbol=DEMODIR='c:/program files/siemens/nx 12.0/nxnastran/nxn12p01/nast/demo' $(program default)
+symbol=SSSALTERDIR='c:/program files/siemens/nx 12.0/nxnastran/nxn12p01/nast/misc/sssalter' $(program default)
+symbol=TPLDIR='c:/program files/siemens/nx 12.0/nxnastran/nxn12p01/nast/tpl' $(program default)
+SDIR='c:/users/yang/appdata/local/temp/plateholder_sim-solution_1.T19440_36'
+DBS='c:/users/yang/appdata/local/temp/plateholder_sim-solution_1.T19440_36'
+SCR=yes
+SMEM=20.0X
+NEWDEL='c:/program files/siemens/nx 12.0/nxnastran/nxn12p01/em64tntl/SSS'
+DEL='NXNDEF'
+AUTH='27800@localhost'
+AUTHQUE=0
+MSGCAT='c:/program files/siemens/nx 12.0/nxnastran/nxn12p01/em64tntl/analysis.msg'
+MSGDEST='f06'
+PROG=bundle
+NEWS='c:/program files/siemens/nx 12.0/nxnastran/nxn12p01/nast/news.txt'
+UMATLIB='libnxumat.dll'
+-------------------------------------------------------------------
+NXN_ISHELLPATH=C:\Program Files\Siemens\NX 12.0\nxnastran\bin
+NXN_JIDPATH=
+PATH=c:/program files/siemens/nx 12.0/nxnastran/nxn12p01/em64tntl;c:/program files/siemens/nx 12.0/nxnastran/nxn12p01/em64tntl/sysnoise;c:/program files/siemens/nx 12.0/nxnastran/nxn12p01/em64tntl/sml;c:/program files/siemens/nx 12.0/nxnastran/nxn12p01/em64tntl/impi/bin;c:/program files/siemens/nx 12.0/nxnastran/nxn12p01/em64tntl/monitor;C:\Program Files\Java\bin;C:\Program Files\Siemens\NX 12.0\nxbin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\Yang\AppData\Local\Microsoft\WindowsApps;C:\Users\Yang\AppData\Local\GitHubDesktop\bin
+Command Line: plateholder_sim-solution_1.dat prog=bundle old=no scratch=yes sys442=2
+Current Dir: C:\Users\Yang\Desktop\YangsFiles\Projects\3DPrinterCalibrationAndTuning\DoogellVegaGlassBedSupport
+Executable:  c:/program files/siemens/nx 12.0/nxnastran/nxn12p01/em64tntl/analysis.exe
+NXN_MSG:     stderr
+FPE:         no
+-------------------------------------------------------------------
+Current resource limits:
+ Physical memory:                    16303 MB
+ Physical memory available:           8645 MB
+ Paging file size:                   19966 MB
+ Paging file size available:          6908 MB
+ Virtual memory:                 134217727 MB
+ Virtual memory available:       134213540 MB
+-------------------------------------------------------------------
+System configuration:
+ Hostname:         SegotepLux
+ Architecture:     em64tnt
+ Platform:         Intel64 Family 6 Model 158 Stepping 13 Windows 10  
+ Model:            Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz
+ Clock freq.:      3600 MHz
+ Number of CPUs:   16
+ Executable:       standard
+ Raw model ID:     8666
+ Config number:    8666
+ Physical memory:  16303 MB
+ Virtual memory:   19966 MB
+ Numeric format:   64-bit little-endian IEEE.
+ Bytes per word:   8
+ Disk block size:  512 bytes (64 words)
+ Remote shell cmd: Remote capabilities not available.
+-------------------------------------------------------------------
+NX Nastran started  Mon Jun 15 12:55:37 CST 2020
+ 12:55:37  Beginning Analysis
+
+ 12:55:37  NX NASTRAN Authorization Information - System Attributes
+ 12:55:37  --------------------------------------------------------
+ 12:55:37  Model: Intel(R) Core(TM) i9-9900K CPU @
+ 12:55:37  Machine: Intel64 Family 6 Model 158 Stepp
+ 12:55:37  OS: Windows 10
+ 12:55:37  Version:
+ 12:55:37  License File(s): 27800@localhost
+
+
+ 12:55:37  NX NASTRAN Licensing Information
+ 12:55:37  -------------------------------
+ 12:55:37  Sold To ID:            1002010 - *SolidSQUAD*
+ 12:55:37  Webkey Access Code:    5555555555
+ 12:55:37  License File Issuer:   UGS
+
+
+ 12:55:37  NX NASTRAN Authorization Information - Checkout Successful
+ 12:55:37  ----------------------------------------------------------
+ 12:55:37  License for module NX Nastran Basic - NX Desktop (Bundle)  checked out successfully
+
+Loading Shared Library C:\Program Files\Siemens\NX 12.0\nxcae_extras\tmg\exe\mayamoncomm.dll
+Starting viewer with UGII_MONITOR_DIR set to 'C:\Program Files\Siemens\NX 12.0\nxcae_extras\tmg\exe'
+Starting monitor viewer at C:\Program Files\Siemens\NX 12.0\nxcae_extras\tmg\exe/xcsmon_viewer.exe
+ 12:55:40  Analysis started.
+ 12:55:40  Geometry access/verification to CAD part initiated (if needed).
+ 12:55:40  Geometry access/verification to CAD part successfully completed (if needed).
+ 12:55:41  Finite element model generation started.
+ 12:55:43  Finite element model generated 352302 degrees of freedom.
+ 12:55:43  Finite element model generation successfully completed.
+ 12:55:43  Application of Loads and Boundary Conditions to the finite element model started.
+ 12:55:43  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 12:55:51  Solution of the system equations for linear statics started.
+ 12:55:51  Solution of the system equations for linear statics successfully completed.
+ 12:55:53  Linear static analysis completed.
+ 12:55:57  NSEXIT: EXIT(0)
+ 12:55:57  Analysis complete  0
+Real:       20.292 seconds ( 0:00:20.292)
+User:       17.390 seconds ( 0:00:17.390)
+Sys:         0.890 seconds ( 0:00:00.890)
+NX Nastran finished Mon Jun 15 12:55:57 CST 2020

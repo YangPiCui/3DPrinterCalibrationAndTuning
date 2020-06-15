@@ -8,11 +8,6 @@
 M17        ;enable stepper motor idle hold for glass bed
 M18 S0     ;disable stepper motor idle timeout for glass bed
 
-M92 E170.577                    ;set extruder steps/mm
-M92 X79.872 Y80.267 Z400.76     ;set XYZ steps/mm
-M301 P11 I2.75 D100              ;set hotend PID
-M500                            ;save calibrated steps/mm and PID
-
 ;M109 S{print_temperature} ;heat hot end to this temperature and wait
 ;M190 S{print_bed_temperature} ;heat bed to this temperature and wait
 G21        ;metric values
@@ -20,11 +15,21 @@ G90        ;absolute positioning
 M82        ;absolute extrusion mode
 M107       ;start with the fan off
 
+M92 E96.5                         ;set extruder steps/mm
+M92 X79.872 Y80.267 Z400.76       ;set XYZ steps/mm
+M301 P10 I2.5 D100                ;set hotend PID
+M201 X220 Y220 Z20 E9999          ;Set max print acceleration in mm/s^2
+M202 X220 Y220 Z20 E9999          ;Set max travel acceleration in mm/s^2
+M566 X0.001 Y0.001 Z0.001 E9999   ;Sets the maximum allowable speed change (sometimes called 'jerk speed') of each motor when changing direction.
+M500                              ;save 
+
 G28		           ;performe homing routine
-G92 E0             ;reset the extruder position to 0mm
-G1 F120            ;set feedrate to 100mm/minute
-G1 Z30 E15 F100    ;move the plateform down 30mm while ejecting some waste material
-G92 E0
+
+; Use skirt for material extrusion.
+;G92 E0                ;reset the extruder position to 0mm
+;G1 F100               ;set feedrate to 100mm/minute
+;G1 Z30 E5             ;move the plateform down 30mm while ejecting some waste material
+;G92 E0               
 
 
 
