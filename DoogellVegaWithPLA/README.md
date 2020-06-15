@@ -9,7 +9,7 @@ Use Cura 4.6.1 as the slicer software.
   
 In a multi-parameter optimization, if one parameter changes, multiple other parameters have to change, too. For example, if we change the layer height, the print speed and the flow rate both have to change (in an unpredictable manner) to ensure the same print accuracy. Fixing as many parameters as possible upfront would simply the optimization.
 
-## Part 0: Calibraten and Optimize Independent Parameters
+## Part 0: Calibrate and Optimize Independent Parameters
 ### Level the Bed  
 First level the bed to the hotend with the paper method. Make sure both the hotend and the bed are at printing temperatures. Use default values for this.  
 Next, level the whole printer with a bubble leveler placed on the bed.  
@@ -86,15 +86,15 @@ corrected value = existing value * desired value / actual value
 > E steps/mm = 96.67 * 200 / 200.5 = 96.5;  
 
 
-### [The Printer Start and End G-codes in Cura](StartAndEndG-code.txt)  
+### [The Printer's Start and End G-codes in Cura](StartAndEndG-code.txt)  
 
 
 ### Set Print Parameters 
 Load default cura profile "Fine", which has a layer height of 0.1mm.  
 Choose these constant parameter(s) for production print:  
-> Layer height = 0.16; //A multiple of 0.04mm and should be less than 80% of nozzle diameter. [stepper motor magic number](https://www.youtube.com/watch?v=WIkT8asT90A).  [Which layer height gives you the strongest 3D prints](https://www.youtube.com/watch?v=fbSQvJJjw2Q&t=644s).
-> Line Width = 0.48; //Minimum Line Width = Nozzle Size + Layer Height;  Maximum Line Width = Nozzle Flat Size + Layer Height;  [understand line width](https://dyzedesign.com/2018/07/3d-print-speed-calculation-find-optimal-speed/#:~:text=A%20general%20rule%20of%20thumb,bigger%20nozzles%20and%20layer%20height.)
-> Print Speed = Travel Speed = 80mm/s; //[3D Printing Speed Calculator](https://dyzedesign.com/3d-printing-speed-calculator/). Set to slightly less than max.
+> Layer height = 0.16; //A multiple of 0.04mm and should be less than 80% of nozzle diameter. [stepper motor magic number](https://www.youtube.com/watch?v=WIkT8asT90A).  [Which layer height gives you the strongest 3D prints](https://www.youtube.com/watch?v=fbSQvJJjw2Q&t=644s).  
+> Line Width = 0.48; //Minimum Line Width = Nozzle Size + Layer Height;  Maximum Line Width = Nozzle Flat Size + Layer Height;  [understand line width](https://dyzedesign.com/2018/07/3d-print-speed-calculation-find-optimal-speed/#:~:text=A%20general%20rule%20of%20thumb,bigger%20nozzles%20and%20layer%20height.)  
+> Print Speed = Travel Speed = 80mm/s; //[3D Printing Speed Calculator](https://dyzedesign.com/3d-printing-speed-calculator/). Set to slightly less than max.  
 > Infill Pattern = Gyroid;  //[increased strength for the lowest weight.](https://support.ultimaker.com/hc/en-us/articles/360012607079-Infill-settings) [Testing 3D printed infill pattern.](https://www.youtube.com/watch?v=upELI0HmzHc)
 > Initial Layer Speed = 20mm/s; //[Tune First Layer.](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
 > Combing Mode = Not in Skin;  
@@ -102,26 +102,26 @@ Choose these constant parameter(s) for production print:
 > Optimize Wall Printing Order = True;  
 > Print Thin Walls = True;  
 
-## Part 1: Optimize Inter-dependent Parameters
-### 1. Acceleration and Jerk Control ([reference](https://all3dp.com/2/3d-printing-speed-optimal-settings/) | [reference](https://www.thingiverse.com/thing:1586548) | [Printing at 300mm/s](https://dyzedesign.com/2016/10/printing-300-mm-s-part-1-basics-hardware/) | [Motion Profile](https://www.controleng.ca/servosoft/SSHelp1033/source/MotionProfile.htm) | [reference](https://www.reddit.com/r/3Dprinting/comments/99rhah/what_is_jerk_really_measuring/))  
-Achieve the highest speed without sacrificing quality. The Cura settings alone don't affect how this printer prints. Put these values in the Start D-code using the commands M201, M202, and M566.  See the StartAndEndG-code.txt for the tuned values.
+## Part 1: Optimize Inter-dependent Parameters Iteratively
+### Acceleration and Jerk Control ([reference](https://all3dp.com/2/3d-printing-speed-optimal-settings/) | [reference](https://www.thingiverse.com/thing:1586548) | [Printing at 300mm/s](https://dyzedesign.com/2016/10/printing-300-mm-s-part-1-basics-hardware/) | [Motion Profile](https://www.controleng.ca/servosoft/SSHelp1033/source/MotionProfile.htm) | [reference](https://www.reddit.com/r/3Dprinting/comments/99rhah/what_is_jerk_really_measuring/))  
+Achieve the highest speed without sacrificing quality. The Cura settings alone don't affect how this printer prints. Put these values in the Start D-code using the commands M201, M202, and M566. See [The Printer's Start and End G-codes in Cura](StartAndEndG-code.txt) for the tuned values.
 
 
-### 3. Cooling
+### Cooling
 > Enable Print Cooling = True;  
 > Fan Speed = 40;  
 > Initial Fan Speed = 100;  
 
 
-### 3. Hotend PID ([reference](https://reprap.org/wiki/PID_Tuning))
+### Hotend PID ([reference](https://reprap.org/wiki/PID_Tuning))
 The printer can't display PID auto tuning results on the LCD touch screen. Neither does it log to SD card. Integrate [these G-codes](TuneAndLogTemperaturePID.gcode) into the Start G-code in Cura to set and save temperature PID manually. 
 [Print 0]  
 > Default PID is good: P = 10; I = 2.5; D = 100; (Machine LCD screen under "Advanced Settings")  
 
 
-### 4. Hotend Temperature - 3D Print Here! ([reference](https://e3d-online.dozuki.com/Guide/Calibrating+Printing+temperature/91))(https://matterhackers.dozuki.com/Guide/PID+Tuning/6)) | [reference](https://reprap.org/wiki/PID_Tuning) | [reference]([https://reprap.org/wiki/G-code#M928:_Start_SD_logging](https://reprap.org/wiki/G-code#M928:_Start_SD_logging))) 
+### Hotend Temperature - 3D Print Here! ([reference](https://e3d-online.dozuki.com/Guide/Calibrating+Printing+temperature/91))(https://matterhackers.dozuki.com/Guide/PID+Tuning/6)) | [reference](https://reprap.org/wiki/PID_Tuning) | [reference]([https://reprap.org/wiki/G-code#M928:_Start_SD_logging](https://reprap.org/wiki/G-code#M928:_Start_SD_logging))) 
 
-Stack the [Smart compact temperature calibration Towers](https://www.thingiverse.com/thing:2729076)   on top of each other [in Cura](CalibrationObjects/TemperatureTower.3mf). Use "Extensions" -> "Post Processing" -> "ChangeAtZ" to set the temperatures.  (1.4mm, 11.4mm, 21.4mm ...)
+Stack the [Smart compact temperature calibration Towers](https://www.thingiverse.com/thing:2729076)   on top of each other [in Cura](CalibrationObjects/TemperatureTower.3mf). Make sure you import the models only (without importing profiles)! Use "Extensions" -> "Post Processing" -> "ChangeAtZ" to set the temperatures.  (1.4mm, 11.4mm, 21.4mm ...)
   
 Infill = 15%;  
 Support = No;  
@@ -132,6 +132,7 @@ Build Plate Adhesion = None;
     
 	
 ### 4. Retraction Values (Minimize Stringing) - 3D Print Here! ([reference](https://all3dp.com/2/3d-print-stringing-easy-ways-to-prevent-it/) | [reference](https://www.thingiverse.com/thing:2219103))
+[StringTest.stl](CalibrationObjects/StringTest.stl)  
 Wall Line Count = 4; //default 1  
 Top Layers = Bottom Layers = 4; //default 4  
 Infill Density = 100;  
@@ -147,6 +148,8 @@ Build Plate Adhesion = None;
 
   
 ### 5. Flow Rate (Extruder Multiple) - 3D Print Here!  ([reference](https://e3d-online.dozuki.com/Guide/Flow+rate+%28Extrusion+multiplier%29+calibration+guide./89))  
+[FlowRateCalibration.3mf](CalibrationObjects/FlowRateCalibration.3mf)  
+Make sure you import the models only (without importing profiles)!
 Wall Line Count = 2; //default 1  
 Top Layers = Bottom Layers = 0; //default 4  
 Infill Density = 0;  
@@ -161,7 +164,8 @@ Corrected Flow Rate = Existing flow rate * Desired wall thickness / actual wall 
 
 
 ### 7. Horizontal Expansion - 3D Print Here! ([reference](https://www.youtube.com/watch?v=UUelLZvDelU) | [reference](https://bradshacks.com/3d-printing-tolerancing/))
-
+[HorizontalExpansionCalibration.3mf](CalibrationObjects/HorizontalExpansionCalibration.3mf)  
+Import model only!
 > Wall Line Count = Top Layers = Bottom Layers = 6; //[3-4 for good strength. Max strength with 5-6 lines and 20-30% infill.](https://www.youtube.com/watch?v=sAZpnlzCwiU)  
 > Infill = 30%;  
 > Connect Infill Lines;  
