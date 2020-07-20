@@ -18,18 +18,17 @@ M107       ;start with the fan off
 M92 E96.5                         ;set extruder steps/mm
 M92 X79.872 Y80.267 Z400.76       ;set XYZ steps/mm
 M301 P10 I2.5 D100                ;set hotend PID
-M201 X220 Y220 Z20 E9999          ;Set max print acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
-M202 X220 Y220 Z20 E9999          ;Set max travel acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
+M201 X250 Y250 Z20 E9999          ;Set max print acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
+M202 X250 Y250 Z20 E9999          ;Set max travel acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
 M566 X0.001 Y0.001 Z0.001 E9999   ;Sets the maximum allowable speed change (sometimes called 'jerk speed') of each motor when changing direction. 0 for infinite jerk.
 M500                              ;save 
 
 G28		           ;performe homing routine
 
-; Use skirt for material extrusion.
-;G92 E0                ;reset the extruder position to 0mm
-;G1 F100               ;set feedrate to 100mm/minute
-;G1 Z30 E5             ;move the plateform down 30mm while ejecting some waste material
-;G92 E0               
+G92 E0                ;reset the extruder position to 0mm
+G1 F100               ;set feedrate to 100mm/minute
+G1 Z30 E10             ;move the plateform down 30mm while ejecting some waste material
+G92 E0               
 
 
 
