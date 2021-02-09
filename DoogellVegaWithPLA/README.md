@@ -1,7 +1,6 @@
 # Doogell Vega Calibration and Tuning
-
-Bought 2nd hand for $500.   
-It has imported stepper motors and linear rails.
+Bought 2nd hand for $500.  
+It has imported stepper motors and linear rails.  
 Greased rails. Cleaned belt and belt housing.  
 Replaced bed cover with tempered sanded-surface glass.  
 Pressed printer frame against wall to steady the former.  
