@@ -94,7 +94,7 @@ Load default cura profile "Fine", which has a layer height of 0.1mm.
 Choose these constant parameter(s) for production print:  
 > Layer height = 0.16; //A multiple of 0.04mm and should be less than 80% of nozzle diameter. [stepper motor magic number](https://www.youtube.com/watch?v=WIkT8asT90A).  [Which layer height gives you the strongest 3D prints](https://www.youtube.com/watch?v=fbSQvJJjw2Q&t=644s).  
 > Line Width = 0.48; //Minimum Line Width = Nozzle Size + Layer Height;  Maximum Line Width = Nozzle Flat Size + Layer Height;  [understand line width](https://dyzedesign.com/2018/07/3d-print-speed-calculation-find-optimal-speed/#:~:text=A%20general%20rule%20of%20thumb,bigger%20nozzles%20and%20layer%20height.)  
-> Print Speed = 90mm/s; //[3D Printing Speed Calculator](https://dyzedesign.com/3d-printing-speed-calculator/). Set to 80% of max printing speed to avoid nozzle-clogs.  
+> Print Speed = 90mm/s; // Max [3D Printing Speed Calculator](https://dyzedesign.com/3d-printing-speed-calculator/).
 > Top/Bottom Pattern = Bottom Pattern Initial Layer = Zig Zag;  
 > Infill Pattern = Gyroid;  //[increased strength for the lowest weight.](https://support.ultimaker.com/hc/en-us/articles/360012607079-Infill-settings) [Testing 3D printed infill pattern.](https://www.youtube.com/watch?v=upELI0HmzHc)
 > Optimize Wall Printing Order = True;  
