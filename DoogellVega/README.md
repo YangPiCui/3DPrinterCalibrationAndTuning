@@ -1,4 +1,4 @@
-# Doogell Vega Calibration and Tuning
+# Doogell Vega
 ![](DoogellVega.jpg)  
 ![](GlassBedUpgrade.jpg)  
 Bought 2nd hand for $500; CoreXY structure; Imported stepper motors and linear rails.  
