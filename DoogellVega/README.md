@@ -52,7 +52,7 @@ Apply the Gcodes in "SetXYZStepsPerMm.gcode" to save the calibrated values.
 > Print Accelaration = 250 mm/s^2;  
 > Print Jerk = 0.001 mm/s; //print head's max speed at which it can change direction  
   
-The Cura settings alone don't affect printer acceleration. Put these values in the Start G-code using the commands M201, M202, and M566. See [The Printer's Start and End G-codes in Cura](StartAndEndG-code.txt) for the tuned values.  
+The Cura settings alone don't affect printer acceleration. Put these values in the Start G-code using the commands M201, M202, and M566. See "StartAndEndG-code.txt" for the tuned values.  
 
 
     
