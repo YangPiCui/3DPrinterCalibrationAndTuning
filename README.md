@@ -152,6 +152,7 @@ Skirt Minimum Length = 50mm;
 
 ### 1.8 Determine Max Overhang Angle [Print Some Test Objects At This Step]
 [How to calculate maximum overhang angle](https://omni3d.com/blog/how-to-calculate-maximum-overhang-angle/)  
+![](TableOfMaxOverhangAngles.jpg)
 Print an object to test the overhang angle.
 
 
