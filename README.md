@@ -70,7 +70,7 @@ Default steps/mm E = 95.8 (extrusion multiplier);
 corrected value = existing value * desired value / actual value
 > E steps/mm = 96.67 * 200 / 200.5 = 96.5;  
 
-### 0.3 Calcolate Printer Max Mechanical Speed
+### 0.3 Calculate Printer Max Mechanical Speed
 > X/Y Max Speed = 300mm/s;  
 > Z Max Speed =  12.5mm/s;   
 > E Max Speed = 28 mm/s;   
