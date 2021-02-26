@@ -11,7 +11,7 @@ temporary value = 0.1;  //comments
 1. Level the print bed against the print head.
 2. Level the printer with a bubble leveler on the print bed.
 
-### 0.0 Acqoire Printer Basic Parameters
+### 0.0 Acquire Printer Basic Parameters
 X/Y resolution = 0.1mm;  
 Z resolution = 0.04mm;    
 > Max hotend temperature = 260;  
@@ -92,14 +92,14 @@ Choose these constant parameter(s) for production print:
 > Print Accelaration = 250 mm/s^2;  
 > Print Jerk = 0.001 mm/s; //print head's max speed at which it can change direction 
 
-### 1.1 Cooling
+### 1.1 Optimize Cooling
 > Enable Print Cooling = false; //I prefer natural cooling for better layer bonding  
   
 
-### 1.2 Hotend PID ([reference](https://reprap.org/wiki/PID_Tuning)) 
+### 1.2 Tune Hotend PID ([reference](https://reprap.org/wiki/PID_Tuning)) 
 > The default PIDs are usually good: P = 10; I = 2.5; D = 100;  
 
-### Hotend Temperature [Print Some Test Objects At This Step] ([reference](https://e3d-online.dozuki.com/Guide/Calibrating+Printing+temperature/91))(https://matterhackers.dozuki.com/Guide/PID+Tuning/6)) | [reference](https://reprap.org/wiki/PID_Tuning) | [reference]([https://reprap.org/wiki/G-code#M928:_Start_SD_logging](https://reprap.org/wiki/G-code#M928:_Start_SD_logging))) 
+### 1.3 Optimize Hotend Temperature [Print Some Test Objects At This Step] ([reference](https://e3d-online.dozuki.com/Guide/Calibrating+Printing+temperature/91))(https://matterhackers.dozuki.com/Guide/PID+Tuning/6)) | [reference](https://reprap.org/wiki/PID_Tuning) | [reference]([https://reprap.org/wiki/G-code#M928:_Start_SD_logging](https://reprap.org/wiki/G-code#M928:_Start_SD_logging))) 
 Stack the [Smart compact temperature calibration Towers](https://www.thingiverse.com/thing:2729076)   on top of each other [in Cura](CalibrationObjects/TemperatureTower.3mf). Make sure you import the models only (without importing profiles)! Use "Extensions" -> "Post Processing" -> "ChangeAtZ" to set the temperatures.  (1.4mm, 11.4mm, 21.4mm ...)  
 Infill = 15%;  
 Support = No;  
@@ -107,8 +107,7 @@ Build Plate Adhesion = Skirt;
 > Printing Temperature = 210 Celsius;  
 > Build Plate Temperature = 35;  //[reference](https://all3dp.com/2/the-best-pla-print-temperature-how-to-achieve-it/)  | [Correct elephant foot and print edge bending.]  
 
-    
-### Retraction Values (Minimize Stringing) [Print Some Test Objects At This Step] ([reference](https://all3dp.com/2/3d-print-stringing-easy-ways-to-prevent-it/) | [reference](https://www.thingiverse.com/thing:2219103))
+### 1.4 Minimize Stringing [Print Some Test Objects At This Step] ([reference](https://all3dp.com/2/3d-print-stringing-easy-ways-to-prevent-it/) | [reference](https://www.thingiverse.com/thing:2219103))
 [StringTest.stl](CalibrationObjects/StringTest.stl)   
 Wall Line Count = 3; //default 1  
 Top Layers = Bottom Layers = 4; //default 4  
@@ -121,9 +120,8 @@ Build Plate Adhesion = skirt;
 > Combing Mode = Not in Skin;  
 > Max Comb Distance With No Retract = 15mm;  
 > Z Hop When Retracted = False;  
-
   
-### Flow Rate (Extruder Multiple) [Print Some Test Objects At This Step]  ([reference](https://e3d-online.dozuki.com/Guide/Flow+rate+%28Extrusion+multiplier%29+calibration+guide./89))  
+### 1.5 Calibrate Flow Rate [Print Some Test Objects At This Step]  ([reference](https://e3d-online.dozuki.com/Guide/Flow+rate+%28Extrusion+multiplier%29+calibration+guide./89))  
 [FlowRateCalibration.3mf](CalibrationObjects/FlowRateCalibration.3mf) Make sure you import the models only (without importing profiles)!  
 Wall Line Count = 2; //default 1  
 Top Layers = Bottom Layers = 0; //default 4  
@@ -134,7 +132,7 @@ Corrected Flow Rate = Existing flow rate * Desired wall thickness / actual wall 
 > Flow = 92;
 (https://all3dp.com/1/common-3d-printing-problems-troubleshooting-3d-printer-issues/)  
 
-### Horizontal Expansion [Print Some Test Objects At This Step] ([reference](https://www.youtube.com/watch?v=UUelLZvDelU) | [reference](https://bradshacks.com/3d-printing-tolerancing/))
+### 1.6 Calibrate Horizontal Expansion [Print Some Test Objects At This Step] ([reference](https://www.youtube.com/watch?v=UUelLZvDelU) | [reference](https://bradshacks.com/3d-printing-tolerancing/))
 [HorizontalExpansionCalibration.3mf](CalibrationObjects/HorizontalExpansionCalibration.3mf) Use "import model" instead of "import project"! 
 > Connect Infill Lines;  
 > Randomize Infill Start;  
@@ -146,21 +144,23 @@ Skirt Minimum Length = 50mm;
 > Horizontal Expansion = Initial Layer Horizontal Expansion = -0.05; //use a vernier caliber
 > Hole Horizontal Expansion = 0.1; //positive value makes bigger holes
 
-### Initial Layer
-> Initial Layer Height = 0.4; // >=Layer Height, <=80% of nozzle size, multiple of 0.04mm. 
+### 1.7 Optimize Initial Layer Adhesion
+> Initial Layer Height = 0.4; // Initial Layer Heigrt == multiple of 0.04mm && >= Layer Height && <= 80% of nozzle size. 
 > Z Offset = -0.0mm; //[cura z offset simply explained](https://all3dp.com/2/cura-z-offset-simply-explained/) 
 > Initial Layer Speed = 20mm/s; //[Tune First Layer.](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
 > Initial Layer Flow = 100; //this is scaled from the Flow value.  
 
-### Determine Max Overhang Angle 
+### 1.8 Determine Max Overhang Angle [Print Some Test Objects At This Step]
 [How to calculate maximum overhang angle](https://omni3d.com/blog/how-to-calculate-maximum-overhang-angle/)  
+Print an object to test the overhang angle.
 
-### Miscellaneous Settings  
+
+## 2. Miscellaneous Settings  
 > Infill Travel Optimization = On;  
 > Avoid Supports When Travelling = True;  
 > Slicing Tolerance = Inclusive;  
    
-### Situational Settings  
+### 2.0 Situational Settings  
 > Wall Line Count = Top Layers = Bottom Layers = 6; //[3-4 layers && 15-20% for good strength. Max strength with 5-6 layers and 25-30% infill.](https://www.youtube.com/watch?v=sAZpnlzCwiU)  
 > Infill = 30%;  
 > Build Plate Adhesion Type = Brim;  
