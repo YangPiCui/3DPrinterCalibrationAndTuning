@@ -1,8 +1,10 @@
 # 3DPrinterCalibrationAndTuning
-Below instructions are based on the Doogell Vega 3D printer and the Cura Slicer.    
-temporary value = 0.1;  //comments  
-> permanent value = 0.2;  
-> Filament Material = Generic PLA;  
+Instructions are based on the Doogell Vega 3D printer and the Cura Slicer.  
+     
+a temporary value = 0.1;  //comments  
+> a permanent value = 0.2;  
+  	
+> Filament Diameter = 1.75mm;  
 
 
 ## 0. Calibrate Printer and Fix Independent Slicer Parameters
@@ -29,7 +31,7 @@ Printhead ([how these values are defined](https://community.ultimaker.com/topic/
 > Y max = 37; //measured in the positive y direction  
 > Gantry Height = 82mm; //the lowest point on the rails in which the extruder assembly rides to the print bed when the nozzle is at height Z=0  
   
-Single Extruder   
+Extruder 0:   
 > Compatible material diameter = 1.75 mm;  
 > Nozzle size = 0.6mm; //default 0.4mm  
 > Nozzle Flat = 1.2mm.  
