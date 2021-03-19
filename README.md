@@ -1,10 +1,8 @@
 # 3DPrinterCalibrationAndTuning
-Instructions are based on the Doogell Vega 3D printer and the Cura Slicer.  
+Instruction is based on the Cura Slicer and Doogell Vega.  
      
 a temporary value = 0.1;  //comments  
-> a permanent value = 0.2;  
-  	
-> Filament Diameter = 1.75mm;  
+> Filament Diameter = 1.75mm; // a permanent value 
 
 
 ## 0. Calibrate Printer and Fix Independent Slicer Parameters
@@ -111,13 +109,13 @@ Build Plate Adhesion = Skirt;
 
 ### 1.4 Minimize Stringing [Print Some Test Objects At This Step] ([reference](https://all3dp.com/2/3d-print-stringing-easy-ways-to-prevent-it/) | [reference](https://www.thingiverse.com/thing:2219103))
 [StringTest.stl](CalibrationObjects/StringTest.stl)   
-Wall Line Count = 3; //default 1  
-Top Layers = Bottom Layers = 4; //default 4  
+Wall Line Count = 3;   
+Top Layers = Bottom Layers = 4;   
 Infill Density = 15;  
 Support = No;  
 Build Plate Adhesion = skirt;  
 > Retract Before Outer Wall = True;  
-> Retraction Distance = 2mm;  
+> Retraction Distance = 1.5mm;  
 > Retraction Speed = 30mm/s; // same as the E Max Speed
 > Combing Mode = Not in Skin;  
 > Max Comb Distance With No Retract = 15mm;  
@@ -125,8 +123,8 @@ Build Plate Adhesion = skirt;
   
 ### 1.5 Calibrate Flow Rate [Print Some Test Objects At This Step]  ([reference](https://e3d-online.dozuki.com/Guide/Flow+rate+%28Extrusion+multiplier%29+calibration+guide./89))  
 [FlowRateCalibration.3mf](CalibrationObjects/FlowRateCalibration.3mf) Make sure you import the models only (without importing profiles)!  
-Wall Line Count = 2; //default 1  
-Top Layers = Bottom Layers = 0; //default 4  
+Wall Line Count = 2; 
+Top Layers = Bottom Layers = 0;  
 Infill Density = 0;  
 Build Plate Adhesion Type = Brim;   
   
@@ -147,10 +145,10 @@ Skirt Minimum Length = 50mm;
 > Hole Horizontal Expansion = 0.1; //positive value makes bigger holes
 
 ### 1.7 Optimize Initial Layer Adhesion
-> Initial Layer Height = 0.4; // Initial Layer Heigrt == multiple of 0.04mm && >= Layer Height && <= 80% of nozzle size. 
+> Initial Layer Height = 0.4-0.1 = 0.3; // Set the initial layer height (ILH) to be the layer height (0.4mm) from the buildplate. I used a piece of paper 0.1mm thick to level the bed. ILH == multiple of Z-resolution(0.04mm) && (>= Layer Height) && (<= 80% of nozzle size) 
 > Z Offset = -0.0mm; //[cura z offset simply explained](https://all3dp.com/2/cura-z-offset-simply-explained/) 
 > Initial Layer Speed = 20mm/s; //[Tune First Layer.](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
-> Initial Layer Flow = 100; //this is scaled from the Flow value.  
+> Initial Layer Flow = 92*0.4/0.3 = 123; //scaled from the Flow value; = actual initial layer height / initial layer height
 
 ### 1.8 Determine Max Overhang Angle [Print Some Test Objects At This Step]
 [How to calculate maximum overhang angle](https://omni3d.com/blog/how-to-calculate-maximum-overhang-angle/)   
@@ -166,8 +164,12 @@ Print an overhang angle test object to confirm this.
 ### 2.0 Situational Settings  
 > Wall Line Count = Top Layers = Bottom Layers = 6; //[3-4 layers && 15-20% for good strength. Max strength with 5-6 layers and 25-30% infill.](https://www.youtube.com/watch?v=sAZpnlzCwiU)  
 > Infill = 30%;  
+> Infill Pattern = Gyroid;
+> Top/Bottom Pattern = Zig Zag;
+> Bottom Pattern Initial Layer = Zig Zag; // Top Bottom Layer number a multiple of 2 preferred
 > Build Plate Adhesion Type = Brim;  
 > Brim Line Count = 1;
+> Tree Support Branch Angle = 30; // This depends on the layer height and line width of the tree support walls
 > Use Adaptive Layers = True; //set to false by default.
 > Adaptive Layers Maximum Variation = 0.08; //half of line height  
 > Adaptive Layers Variation Setp Size = 0.04;  

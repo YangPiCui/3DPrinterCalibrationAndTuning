@@ -1,10 +1,7 @@
-# Doogell Vega
+# [Raise3D Pro2](https://www.raise3d.com/products/pro2-3d-printer/)
 ![](DoogellVega.jpg)  
 ![](GlassBedUpgrade.jpg)  
-Bought 2nd hand for $500; CoreXY structure; Imported stepper motors and linear rails.  
-Touch screen is inaccurate to the touch; One has to use Gcode to change the default printer parameters.   
-Rectangular build plate; Heated bed; Replaced bed cover with tempered sanded-surface glass.   
-Added plexiglass hud.
+Bought 2nd hand for $2600.      
   
 # G-code
 > G-code flavor = RepRap;  
@@ -12,23 +9,20 @@ Added plexiglass hud.
 See the "GCodes" folder
 
 # Build Plate
-> Max bed temperature = 70;  
-> X direction = ↓; X range = 0-250; //Positive direction from the back to the front  
-> Y direction = →, Y range = 0-260; //Belt starts to slip at 294  
-> Z direction = up, Z range = 0-200; //for glass bed; Default is 300.   
-> X/Y resolution = 0.1mm;  
-> Z resolution = 0.04mm;  
+> Max bed temperature = 110 Celsius;  
+> X direction = →; X range = 0-250; //Positive direction from the back to the front  
+> Y direction = ↑, Y range = 0-300; //Belt starts to slip at 294  
+> Z direction = up, Z range = 0-290; //Default is 300.   
+> X/Y resolution = 0.0078125mm;  
+> Z resolution = 0.00078125mm;  
   
 # Printhead ([how these values are defined](https://community.ultimaker.com/topic/18484-printhead-settings/)) 
 > Filament Diameter = 1.75mm;  
-> Max hotend temperature = 260;  
+> Max hotend temperature = 300 Celsius;  
 > Default PID works well: P = 10; I = 2.5; D = 100; (Machine LCD screen under "Advanced Settings")  
   
-The printer can not display the results of PID auto tuning on its LCD screen; Neither can it log the results onto a SD card.  
-Integrate TuneAndLogTemperaturePID.gcode into the printer's Start G-code in Cura to set and to save the temperature PID. 
-
 Extruder 0:    
-> Nozzle size = 0.3mm; //default 0.4mm
+> Nozzle size = 0.4mm; //default 
 > X min = -29; //measured in the negative x direction  
 > Y min = -37; //measured in the negative y direction  
 > X max = 60; //measured in the positive x direction  
