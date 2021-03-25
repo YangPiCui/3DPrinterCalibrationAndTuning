@@ -12,7 +12,7 @@ a temporary value = 0.1;  //comments
 2. Level the printer with a bubble leveler on the print bed.
 
 ### 0.0 Acquire Printer Basic Parameters
-X/Y resolution = 0.1mm;  
+X/Y uncertainty = 0.1mm;  
 Z resolution = 0.04mm;    
 > Max hotend temperature = 260;  
 > Max bed temperature = 70;  
@@ -115,7 +115,7 @@ Infill Density = 15;
 Support = No;  
 Build Plate Adhesion = skirt;  
 > Retract Before Outer Wall = True;  
-> Retraction Distance = 1.5mm;  
+> Retraction Distance = 2mm;  
 > Retraction Speed = 30mm/s; // same as the E Max Speed
 > Combing Mode = Not in Skin;  
 > Max Comb Distance With No Retract = 15mm;  
