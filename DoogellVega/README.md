@@ -87,6 +87,7 @@ Apply the Gcodes in "MeasureXYZMaxSpeeds.gcode" to measure the max speeds.
 
 ### 0.5 Tune PID
 > Default PID works well: P = 10; I = 2.5; D = 100; (Machine LCD screen under "Advanced Settings")  
+  
 The printer can not display the results of PID auto tuning on its LCD screen; Neither can it log the results onto a SD card.  
 Integrate TuneAndLogTemperaturePID.gcode into the printer's Start G-code in Cura to set and to save the temperature PID. 
   
@@ -107,11 +108,14 @@ Choose these constant parameter(s) for production print:
 ## 1. Fix Inter-dependent Slicer Parameters
 ### 1.0 Remove Jerk ([reference](https://all3dp.com/2/3d-printing-speed-optimal-settings/) | [reference](https://www.thingiverse.com/thing:1586548) | [Printing at 300mm/s](https://dyzedesign.com/2016/10/printing-300-mm-s-part-1-basics-hardware/) | [Motion Profile](https://www.controleng.ca/servosoft/SSHelp1033/source/MotionProfile.htm) | [reference](https://www.reddit.com/r/3Dprinting/comments/99rhah/what_is_jerk_really_measuring/))
 > Print Accelaration = 250 mm/s^2;  
-> Print Jerk = 0.001 mm/s; //print head's max speed at which it can change direction 
+> Print Jerk = 0.001 mm/s; //print head's max speed at which it can change direction
+   
 The Cura settings alone don't affect printer acceleration. Put these values in the Start G-code using the commands M201, M202, and M566. See "StartAndEndG-code.txt" for the tuned values. 
 
 ### 1.1 Optimize Cooling
 > Enable Print Cooling = false; //I prefer natural cooling for better layer bonding  
+  
+Adjust the minimum layer time.
   
 
 ### 1.2 Tune Hotend PID ([reference](https://reprap.org/wiki/PID_Tuning)) 
