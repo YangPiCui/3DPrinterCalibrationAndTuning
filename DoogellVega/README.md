@@ -33,7 +33,7 @@ Printhead ([how these values are defined](https://community.ultimaker.com/topic/
 > Y min = -37; //measured in the negative y direction  
 > X max = 60; //measured in the positive x direction  
 > Y max = 37; //measured in the positive y direction  
-> Gantry Height = 82mm; //the lowest point on the rails in which the extruder assembly rides to the print bed when the nozzle is at height Z=0  
+> Gantry Height = 92mm; //the lowest point on the rails in which the extruder assembly rides to the print bed when the nozzle is at height Z=0   
   
 Extruder 0:    
 > Nozzle size = 0.3mm; //default 0.4mm
@@ -42,7 +42,6 @@ Extruder 0:
 > Y min = -37; //measured in the negative y direction  
 > X max = 60; //measured in the positive x direction  
 > Y max = 37; //measured in the positive y direction  
-> Gantry Height = 92mm; //the lowest point on the rails in which the extruder assembly rides to the print bed when the nozzle is at height Z=0   
     
 ### 0.2 Calibrate Printer XYZ Steps/mm ([reference](https://www.youtube.com/watch?v=W4CsD5lRvHY&feature=emb_logo))  
 During this step, make sure the hotend is not obstructed in any direction!  
@@ -70,6 +69,7 @@ existing value * desired value / actual value = corrected value
 > X = 80 * .99840 = 79.872;  
 > Y = 80 * 1.00334 = 80.267;  
 > Z = 400 * 1.0019 = 400.76;  
+  
 Apply the Gcodes in "SetXYZStepsPerMm.gcode" to save the calibrated values.  
   
 ### 0.3 Calibrate Printer Extruder Steps/mm (E) ([reference](https://mattshub.com/blog/2017/04/19/extruder-calibration))  
