@@ -152,7 +152,8 @@ Sadly, Pro2's inactive nozzle does not automatically lower to be wiped on Cura's
 
 > Enable Ooze Shield = True;
 
-At this point I have decided to stick to single extrusion printing. Dual extrusion does not save filament after all.  
+At this point I have decided to deploy Pro2 as a single extruder system. Dual extrusion does not save filament. 
+ 
  
 ### Determine Max Overhang Angle and Minimize Support Structure
 [How to calculate maximum overhang angle](https://omni3d.com/blog/how-to-calculate-maximum-overhang-angle/)   
