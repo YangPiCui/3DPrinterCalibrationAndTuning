@@ -127,21 +127,27 @@ Ideally, the inactive nozzle is swiped on the support to remove its ooze, period
 Sadly, Pro2's inactive nozzle does not automatically lower to be wiped on Cura's Prime Tower; neither can the head-lifting feature be disabled.  
   
 > Retract at Layer Change = False/False;
-> Retraction Distance = 1.5/1.5;  
+> Retraction Distance = 2/2;  // I use 2mm as the default.
 > Retraction Speed = 40/40mm/s; // From IdeaMaker, same as the E Max Speed
 > Combing Mode = Not in Skin;  
 > Max Comb Distance With No Retract = 15mm;  
 > Retract Before Outer Wall = True;  
   
-> Enable Prime Tower = False; //Pro2's entire nozzle retracts, obsoleting this feature
-> Wipe Inavtive Nozzle on Prime Tower = False; //Pro2's entire nozzle retracts, obsoleting this feature
-> Nozzle Switch Retraction Distance = 8/8mm; //Unmolten filament should clear the hotend assembly.
+> Build Plate Adhesion Type = None; // Set to none to print brim for the Prime Tower only
+> Build Plate Adhesion Extruder = Right Extruder; // Use the secondary/support extruder to first draw the inside skirt line. This cleans waste material the best.
+> Skirt/Brim Minimum Length = 0/3; // Set to 0 to disable left extruder brim for the Prime Tower
+> Skirt Line Count = 3; 
+
+> Enable Prime Tower = True; 
+> Prime Tower Size = 30; //The prime tower's diameter should be larger than the nozzle separation for the inactive extruder's ooze to be cleaned onto it.
+> Prime Tower Minimum Volume = 1;
+> Wipe Inavtive Nozzle on Prime Tower = True; //Pro2's entire nozzle retracts, lessoning this feature's effectiveness
+> Nozzle Switch Retraction Distance = 8/8mm; //Unmolten, solid filament should clear the hotend assembly.
 > Nozzle Switch Retraction Speed = 40mm/s;
 
-> Build Plate Adhesion Type = Skirt; // This is for removing the extruded waste material generated during the hotend priming sequence
-> Build Plate Adhesion Extruder = Right Extruder; // Use the secondary/support extruder to first draw the inside skirt line. This cleans waste material the best.
-> Skirt Line Count = 1/1; //Set to 0 to disable skirt for the particular extruder
-
+At this point I have decided to stick to single extrusion printing. Dual extrusion does not save support material.
+ 
+ 
 ### Determine Max Overhang Angle and Minimize Support Structure
 [How to calculate maximum overhang angle](https://omni3d.com/blog/how-to-calculate-maximum-overhang-angle/)   
 ![](TableOfMaxOverhangAngles.jpg)  
