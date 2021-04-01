@@ -1,6 +1,6 @@
 # [Raise3D Pro2](https://www.raise3d.com/products/pro2-3d-printer/) 
 Bought 2nd hand for $2600.  
-Instruction is based on the Cura Slicer which is tree support capable.  
+Instruction is based on the Cura Slicer which has the Tree Support Structure.
 a temporary value = 0.1;  //comments  
 > Filament Diameter = 1.75mm; // a permanent setting 
 
@@ -71,15 +71,15 @@ References:
 Load default cura profile "Extra Fast", which has a layer height of 0.3mm.  
   
 > Layer height = 0.3; //An integer multiple of the Z resolution and should be less than 80% of nozzle diameter. [stepper motor magic number](https://www.youtube.com/watch?v=WIkT8asT90A).  [Which layer height gives you the strongest 3D prints](https://www.youtube.com/watch?v=fbSQvJJjw2Q&t=644s).  
-> Initial Layer Height = 0.4-0.1 = 0.3; // Set the initial layer height (ILH) to be the layer height (0.4mm) from the buildplate. I used a piece of paper 0.1mm thick to level the bed. ILH == multiple of Z-resolution(0.04mm) && (>= Layer Height) && (<= 80% of nozzle size) 
-> Line Width = 0.7/0.3; //I chose a thin line width for the support structure. Minimum Line Width = Nozzle Size + Layer Height;  Maximum Line Width = Nozzle Flat Size + Layer Height;  [understand line width](https://dyzedesign.com/2018/07/3d-print-speed-calculation-find-optimal-speed/#:~:text=A%20general%20rule%20of%20thumb,bigger%20nozzles%20and%20layer%20height.)
+> Initial Layer Height = 0.3-0.1 = 0.2; // Set the initial layer height (ILH) so that the distance from the buildplate is the layer height. I used a piece of paper 0.1mm thick to level the bed. ILH == multiple of Z-resolution && (<= 80% of nozzle size) 
+> Line Width = 0.7/0.3; //Prefer easy to remove support structure. Minimum Line Width = Nozzle Size + Layer Height;  Maximum Line Width = Nozzle Flat Size + Layer Height;  [understand line width](https://dyzedesign.com/2018/07/3d-print-speed-calculation-find-optimal-speed/#:~:text=A%20general%20rule%20of%20thumb,bigger%20nozzles%20and%20layer%20height.)
 > Support Extruder = Right Extruder;
-> Support Line Width = 0.3; // If the right extruder is selected as the support extruder, its line width will automatically be set as the support line width.
+> Support Line Width = 0.3; // If the right extruder is selected as the support extruder, Cure automatically uses its line width as the support line width.
   
 > Wall Extruder / Top Bottom Extruder = Left Extruder;  
-> Wall Line Count = Top Layers = Bottom Layers = 4; //[1-2-3-4-5-6 layers && 5-10-15-20-25-30%](https://www.youtube.com/watch?v=sAZpnlzCwiU) 
+> Wall Line Count = Top Layers = Bottom Layers = 4; //[1-2-3-4-5-6 layers <=> 5-10-15-20-25-30% Infill](https://www.youtube.com/watch?v=sAZpnlzCwiU) 
 > Infill = 20%;  
-> Top/Bottom Pattern = Bottom Pattern Initial Layer = Zig Zag;  //Prefer Top Bottom Layer number a multiple of 2
+> Top/Bottom Pattern = Bottom Pattern Initial Layer = Zig Zag;  //Prefer Top Bottom Layer number a multiple of 2 if Zig Zag
 > Optimize Wall Printing Order = True;  
 > Z Seam Alignment = Random;  
 > Print Thin Walls = True;  
@@ -89,13 +89,14 @@ Load default cura profile "Extra Fast", which has a layer height of 0.3mm.
 > Randomize Infill Start;  
 > Infill Travel Optimization = On;  
   
-> Print Speed = 60/95; // Set to about 80% of [Maximum 3D Printing Speed Calculator](https://dyzedesign.com/3d-printing-speed-calculator/).
-> Support Speed = 120/120; // Cura uses the second extruder's print speed to set as the support speed.
+### Set Print Speed (extrusion rate) 
+> Print Speed = 60/95; // Set to about 80% of [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/). The 
+> Support Speed = ; // When selected, Cura automatically uses the second extruder's print speed as the support speed.
 > Initial Layer Speed = 20mm/s; //[Tune First Layer.](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
 
 ### Minimize Printhead Jerk ([reference](https://github.com/Raise3D/Marlin-Raise3D-N-Series/blob/master/Marlin/Marlin_main.cpp) | [reference](https://marlinfw.org/docs/gcode/M204.html))
-Pro2's control panel randomly resets the acceleration and jerk settings. So use the default values, which work fine.  
-Do not set these values in Cura! Cura's G-code alters the settings. 
+Pro2's control panel randomly resets the acceleration and jerk settings. So just use its default values, which work fine.  
+Do not set these values in the printer start G-code or Cura. Cura's alters these settings in the generated G-code.
 
 ### Calibrate Extruder Offset from each other
 Print the calibration object in folder "CalibrationObjects/DualExtruderCalibration".  
@@ -109,7 +110,7 @@ Build Plate Adhesion = Skirt;
 > Printing Temperature = 210/210 Celsius;  
 > Initial / Final Printing Temperature / Standby Temperature = 210/210; // Set this to be equal to the print temperature to decrease print time.
 > Build Plate Temperature = 35;  //[reference](https://all3dp.com/2/the-best-pla-print-temperature-how-to-achieve-it/)  | [Correct elephant foot and print edge bending.]  
-> Z Hop after Extruder Switch Height = 0mm/0mm;  // It's useless
+> Z Hop after Extruder Switch Height = 0mm/0mm;  // None zero value cases layers to misalign.
 
 ### Calibrate Flow Rate [Print Some Test Objects At This Step]  ([reference](https://e3d-online.dozuki.com/Guide/Flow+rate+%28Extrusion+multiplier%29+calibration+guide./89))  
 [FlowRateCalibration.3mf](CalibrationObjects/FlowRateCalibration.3mf) Make sure you import the models only (without importing profiles)!  
