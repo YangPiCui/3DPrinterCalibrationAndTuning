@@ -58,8 +58,11 @@ Use MeasureXYZMaxSpeeds.gcode and a stop-watch.
 Apply printer's PID auto tune feature.
 
 ### StartEndG-codes.txt
-Example:  
-> G1 F200 E{switch_extruder_retraction_amount}      ;Extrude filament  
+[Cura G-code has some perks](https://github.com/Ultimaker/Cura/issues/6383).  
+Don't use this G-code, as it would always set the 1th extruder as the initial extruder.  
+T1  
+G1 F200 E{switch_extruder_retraction_amount}      ;Extrude filament  
+Instead of use G-code to extrude waste material at the start, print long skirt/brim lines instead.  
   
 References:  
 * [Cura keywords](https://github.com/Ultimaker/Cura/blob/master/resources/definitions/fdmprinter.def.json)
@@ -152,7 +155,7 @@ Sadly, Pro2's inactive nozzle does not automatically lower to be wiped on Cura's
 
 > Enable Ooze Shield = True;
 
-At this point I have decided to deploy Pro2 as a single extruder system. Dual extrusion does not save filament. 
+At this point I have decided to deploy Pro2 as a single extruder system. Dual extrusion does not save filament. For this to work, treat it as a dual extruder in Cura but select the left extruder for everything.
  
  
 ### Determine Max Overhang Angle and Minimize Support Structure
@@ -183,7 +186,8 @@ Skirt Minimum Length = 50mm;
 > Hole Horizontal Expansion = 0.1; //positive value makes bigger holes
 
 ### Additional Settings  
-> Maximum Resolution / Travel Resolution / Deviation = 0.005mm;
+
+> Maximum Resolution / Travel Resolution / Deviation / Minimum Polygon Circumference = 0.125mm;
 > Minimum Polygon Circumference = 0.016mm;
 > Slicing Tolerance = Inclusive;  
 > Use Adaptive Layers = True; //set to false by default.

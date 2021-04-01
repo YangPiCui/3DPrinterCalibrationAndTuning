@@ -1,34 +1,25 @@
+==================================
+========== Start G-code ==========
+==================================
 G21              ;Millimeter Units
 G90              ;Absolute Positioning
 M82              ;E Absolute
-M107             ;Fan Off
 
-;Use Pro2's control panel default settings instead.
+;;;;;;; Use Pro2's control panel default settings instead ;;;;;;
 ;M201 X250 Y250 Z25 E500                   ;Set max print and retract acceleration in mm/s^2. 
 ;M204 P250 T250 R1000                       ;Set starting print, travel and retract accelaration
 ;M205 X1 Y1 Z0.1 E4                        ;Sets the maximum allowable speed change (sometimes called 'jerk speed') of each motor when changing direction. 0 for infinite jerk.
 ;M500                                      ;save 
 
-G28 X0 Y0        ;Auto Home
+G28 X0 Y0         ;Home XY
 G28 Z0 
-G1 Z15.0 F300    ;Move bed down 15mm with its feedrate of 300
-T1               ;1st extruder. 
-G92 E0           ;Set position
-G1 F200 E{switch_extruder_retraction_amount}      ;Extrude filament 
-G92 E0
-G1 F200 E-{retraction_amount}                      ;Retract filament 
-T0
-G92 E0
-G1 F200 E{switch_extruder_retraction_amount}      ;Extrude filament 
-G92 E0
-
-G1 F150          ;set default movement speed to be 150mm/s
+G1 F6000          ;set default movement speed 
 M117 Printing...
 
 
 ==================================
-
-
+=========== End G-code ===========
+==================================
 M221 T0 S100     ;Reset flow rate
 M221 T1 S100
 M104 T0 S0       ;Set hotend temp
@@ -36,8 +27,7 @@ M104 T1 S0
 M140 S0          ;Set bed temp
 M107             ;Fan off
 G91              ;Relative positioning
-;G1 E-1 F300
-;G1 Z+0.5 E-5 X-20 Y-20 F150
-G28 X0 Y0
+G1 Z+1           ;Move Bed Down
+G28 X0 Y0        ;Home XY
+M84
 G90              ;Absolute Positioning
-M85 S120         ;Inactivity shutdown after 120 seconds
