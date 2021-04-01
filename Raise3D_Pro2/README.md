@@ -89,6 +89,12 @@ Load default cura profile "Extra Fast", which has a layer height of 0.3mm.
 > Randomize Infill Start;  
 > Infill Travel Optimization = On;  
   
+### Set Temperature 
+> Printing Temperature = 210/210 Celsius;  // Set and use a temperature tower to tune later.
+> Initial / Final Printing Temperature / Standby Temperature = 210/210; // Set this to be equal to the print temperature to save print time.
+> Build Plate Temperature = 45;  //I levelled the bed at this temperature. Make the nozzle and bed reach their target temperature at the same time to save time.
+> Z Hop after Extruder Switch Height = 0mm/0mm;  // None-zero value cases layers to misalign.
+
 ### Set Print Speed (extrusion rate) 
 > Print Speed = 60/95; // Set to about 80% of [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/). The 
 > Support Speed = ; // When selected, Cura automatically uses the second extruder's print speed as the support speed.
@@ -102,16 +108,6 @@ Do not set these values in the printer start G-code or Cura. Cura's alters these
 Print the calibration object in folder "CalibrationObjects/DualExtruderCalibration".  
 Use Cura instead of Raise3D Pro2's console to apply these settings.
 
-### Tune Temperature
-Stack the [Smart compact temperature calibration Towers](https://www.thingiverse.com/thing:2729076) on top of each other in Cura. Make sure you import the models only (without importing profiles)! Once imported, use "Extensions" -> "Post Processing" -> "ChangeAtZ" to set the temperatures at different heights (1.4mm, 11.4mm, 21.4mm ...).  
-Infill = 15%;  
-Support = No;  
-Build Plate Adhesion = Skirt;  
-> Printing Temperature = 210/210 Celsius;  
-> Initial / Final Printing Temperature / Standby Temperature = 210/210; // Set this to be equal to the print temperature to decrease print time.
-> Build Plate Temperature = 35;  //[reference](https://all3dp.com/2/the-best-pla-print-temperature-how-to-achieve-it/)  | [Correct elephant foot and print edge bending.]  
-> Z Hop after Extruder Switch Height = 0mm/0mm;  // None zero value cases layers to misalign.
-
 ### Calibrate Flow Rate [Print Some Test Objects At This Step]  ([reference](https://e3d-online.dozuki.com/Guide/Flow+rate+%28Extrusion+multiplier%29+calibration+guide./89))  
 [FlowRateCalibration.3mf](CalibrationObjects/FlowRateCalibration.3mf) Make sure you import the models only (without importing profiles)!  
 Wall Line Count = 2; 
@@ -122,15 +118,17 @@ Build Plate Adhesion Type = Brim;
 Corrected Flow Rate = Existing flow rate * Desired wall thickness / actual wall thickness
 > Flow = 103/95;
 (https://all3dp.com/1/common-3d-printing-problems-troubleshooting-3d-printer-issues/)
-> Initial Layer Flow = 92*0.4/0.3 = 123; // compensates for the gap between the nozzle and the bed
+> Initial Layer Flow = 100%*0.3/0.2 = 150; // compensates for the gap between the nozzle and the bed
 
 ### Minimize Stringing and Oozing
 Oozing is unavoidable. Molten filament droops under gravity.  
 Filament retraction does not suck the molten filament. It merely relieves downward pressure.   
+Ideally, the inactive nozzle is swiped on the support to remove its ooze, periodically and/or before it touches the printed area.  
+Sadly, Pro2's inactive nozzle does not automatically lower to be wiped on Cura's Prime Tower; neither can the head-lifting feature be disabled.  
   
 > Retract at Layer Change = False/False;
 > Retraction Distance = 1.5/1.5;  
-> Retraction Speed = 40/40mm/s; // same as the E Max Speed
+> Retraction Speed = 40/40mm/s; // From IdeaMaker, same as the E Max Speed
 > Combing Mode = Not in Skin;  
 > Max Comb Distance With No Retract = 15mm;  
 > Retract Before Outer Wall = True;  
