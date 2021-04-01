@@ -38,10 +38,6 @@ Printhead ([how these values are defined](https://community.ultimaker.com/topic/
 Extruder 0:    
 > Nozzle size = 0.3mm; //default 0.4mm
 > Nozzle Flat = 1.2mm.  
-> X min = -29; //measured in the negative x direction  
-> Y min = -37; //measured in the negative y direction  
-> X max = 60; //measured in the positive x direction  
-> Y max = 37; //measured in the positive y direction  
     
 ### 0.2 Calibrate Printer XYZ Steps/mm ([reference](https://www.youtube.com/watch?v=W4CsD5lRvHY&feature=emb_logo))  
 During this step, make sure the hotend is not obstructed in any direction!  
