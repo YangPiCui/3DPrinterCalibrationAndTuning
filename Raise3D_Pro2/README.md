@@ -95,6 +95,11 @@ Load default cura profile "Extra Fast", which has a layer height of 0.3mm.
 > Build Plate Temperature = 45;  //I levelled the bed at this temperature. Make the nozzle and bed reach their target temperature at the same time to save time.
 > Z Hop after Extruder Switch Height = 0mm/0mm;  // None-zero value cases layers to misalign.
 
+### Optimize Part Cooling
+I customized all fans to cool the hot end instead of the printed parts. 
+> Minimum Layer Time = 6s;  
+> Minimum Layer Speed = 20mm/s; // Set this to be the same as the initial layer speed.  
+
 ### Set Print Speed (extrusion rate) 
 > Print Speed = 60/95; // Set to about 80% of [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/). The 
 > Support Speed = ; // When selected, Cura automatically uses the second extruder's print speed as the support speed.
@@ -120,7 +125,7 @@ Corrected Flow Rate = Existing flow rate * Desired wall thickness / actual wall 
 (https://all3dp.com/1/common-3d-printing-problems-troubleshooting-3d-printer-issues/)
 > Initial Layer Flow = 100%*0.3/0.2 = 150; // compensates for the gap between the nozzle and the bed
 
-### Minimize Stringing and Oozing
+### Improve Bed Adhesion And Minimize Stringing And Oozing
 Oozing is unavoidable. Molten filament droops under gravity.  
 Filament retraction does not suck the molten filament. It merely relieves downward pressure.   
 Ideally, the inactive nozzle is swiped on the support to remove its ooze, periodically and/or before it touches the printed area.  
@@ -133,20 +138,21 @@ Sadly, Pro2's inactive nozzle does not automatically lower to be wiped on Cura's
 > Max Comb Distance With No Retract = 15mm;  
 > Retract Before Outer Wall = True;  
   
-> Build Plate Adhesion Type = None; // Set to none to print brim for the Prime Tower only
+> Build Plate Adhesion Type = None; // Set to none to print brim for features such as Support and the Prime Tower only
 > Build Plate Adhesion Extruder = Right Extruder; // Use the secondary/support extruder to first draw the inside skirt line. This cleans waste material the best.
 > Skirt/Brim Minimum Length = 0/3; // Set to 0 to disable left extruder brim for the Prime Tower
 > Skirt Line Count = 3; 
 
 > Enable Prime Tower = True; 
-> Prime Tower Size = 30; //The prime tower's diameter should be larger than the nozzle separation for the inactive extruder's ooze to be cleaned onto it.
+> Prime Tower Size = 10; //The prime tower's diameter should be larger than the nozzle separation for the inactive extruder's ooze to be cleaned onto it.
 > Prime Tower Minimum Volume = 1;
 > Wipe Inavtive Nozzle on Prime Tower = True; //Pro2's entire nozzle retracts, lessoning this feature's effectiveness
 > Nozzle Switch Retraction Distance = 8/8mm; //Unmolten, solid filament should clear the hotend assembly.
 > Nozzle Switch Retraction Speed = 40mm/s;
 
-At this point I have decided to stick to single extrusion printing. Dual extrusion does not save support material.
- 
+> Enable Ooze Shield = True;
+
+At this point I have decided to stick to single extrusion printing. Dual extrusion does not save filament after all.  
  
 ### Determine Max Overhang Angle and Minimize Support Structure
 [How to calculate maximum overhang angle](https://omni3d.com/blog/how-to-calculate-maximum-overhang-angle/)   
@@ -162,11 +168,8 @@ Print an overhang angle test object to confirm this.
 > Support Overhang Angle = 41;
 > Support Wall Line Count = 1;
 > Support Density = 0;
-
-### Optimize Part Cooling
-I customized all fans to cool the hot end instead of the printed parts. 
-> Minimum Layer Time = 6s;  
-> Minimum Layer Speed = 20mm/s; // Set this to be the same as the initial layer speed.  
+> Enable Support Brim = True;
+> Support Brim Line Count = 1;
 
 ### Calibrate Horizontal Expansion [Print Some Test Objects At This Step] ([reference](https://www.youtube.com/watch?v=UUelLZvDelU) | [reference](https://bradshacks.com/3d-printing-tolerancing/))
 [HorizontalExpansionCalibration.3mf](CalibrationObjects/HorizontalExpansionCalibration.3mf) Use "import model" instead of "import project"! 
