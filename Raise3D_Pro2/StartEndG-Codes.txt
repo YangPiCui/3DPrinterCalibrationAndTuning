@@ -13,7 +13,7 @@ M82              ;E Absolute
 
 G28 X0 Y0         ;Home XY
 G28 Z0 
-G1 F6000          ;set default movement speed 
+;G1 F6000          ;set default movement speed 
 M117 Printing...
 
 

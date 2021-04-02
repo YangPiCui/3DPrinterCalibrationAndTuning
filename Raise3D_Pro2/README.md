@@ -59,10 +59,10 @@ Apply printer's PID auto tune feature.
 
 ### StartEndG-codes.txt
 [Cura G-code has some perks](https://github.com/Ultimaker/Cura/issues/6383).  
-Don't use this G-code, as it would always set the 1th extruder as the initial extruder.  
+Don't use this G-code, as once set, it would always use the 1th extruder as the initial extruder.  
 T1  
 G1 F200 E{switch_extruder_retraction_amount}      ;Extrude filament  
-Instead of use G-code to extrude waste material at the start, print long skirt/brim lines instead.  
+Print long skirt/brim lines to prime the nozzle head for single extrusion mode instead.
   
 References:  
 * [Cura keywords](https://github.com/Ultimaker/Cura/blob/master/resources/definitions/fdmprinter.def.json)
@@ -109,8 +109,9 @@ I customized all fans to cool the hot end instead of the printed parts.
 > Initial Layer Speed = 20mm/s; //[Tune First Layer.](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
 
 ### Minimize Printhead Jerk ([reference](https://github.com/Raise3D/Marlin-Raise3D-N-Series/blob/master/Marlin/Marlin_main.cpp) | [reference](https://marlinfw.org/docs/gcode/M204.html))
-Pro2's control panel randomly resets the acceleration and jerk settings. So just use its default values, which work fine.  
-Do not set these values in the printer start G-code or Cura. Cura's alters these settings in the generated G-code.
+Pro2's control panel randomly resets the acceleration and jerk settings. The default values are bit too high.  
+Cura's only adds some of these settings in the generated G-code.  
+Apply custom G-codes with M201, M204, M205 and M500 in the Start G-code instead.  
 
 ### Calibrate Extruder Offset from each other
 Print the calibration object in folder "CalibrationObjects/DualExtruderCalibration".  
