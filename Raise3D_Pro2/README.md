@@ -59,10 +59,10 @@ Apply printer's PID auto tune feature.
 
 ### StartEndG-codes.txt
 [Cura G-code has some perks](https://github.com/Ultimaker/Cura/issues/6383).  
-Don't use this G-code, as once set, it would always use the 1th extruder as the initial extruder.  
-T1  
-G1 F200 E{switch_extruder_retraction_amount}      ;Extrude filament  
-Print long skirt/brim lines to prime the nozzle head for single extrusion mode instead.
+Don't use the below G-code. Once set, it would always use the 1th of the 0th extruder as the initial extruder.  
+Print long skirt/brim lines to prime the nozzle head for single extrusion mode instead.  
+> T1  ;or T0
+> G1 F200 E{switch_extruder_retraction_amount}      ;Extrude filament  
   
 References:  
 * [Cura keywords](https://github.com/Ultimaker/Cura/blob/master/resources/definitions/fdmprinter.def.json)
@@ -100,18 +100,21 @@ Load default cura profile "Extra Fast", which has a layer height of 0.3mm.
 
 ### Optimize Part Cooling
 I customized all fans to cool the hot end instead of the printed parts. 
-> Minimum Layer Time = 6s;  
-> Minimum Layer Speed = 20mm/s; // Set this to be the same as the initial layer speed.  
+> Minimum Layer Time = 20s;  // Time required for a droplet of filament to cool and harden naturally.
+> Minimum Layer Speed = 0.5mm/s;  // Remove this constraint
 
-### Set Print Speed (extrusion rate) 
-> Print Speed = 60/95; // Set to about 80% of [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/). The 
+### Set Print Speed (extrusion rate)
+> Print Speed = 60/95; // Set to about 80% of [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/) for an even filament extrusion.  
 > Support Speed = ; // When selected, Cura automatically uses the second extruder's print speed as the support speed.
 > Initial Layer Speed = 20mm/s; //[Tune First Layer.](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
 
-### Minimize Printhead Jerk ([reference](https://github.com/Raise3D/Marlin-Raise3D-N-Series/blob/master/Marlin/Marlin_main.cpp) | [reference](https://marlinfw.org/docs/gcode/M204.html))
+### Optimize Acceleration and Jerk ([reference](https://github.com/Raise3D/Marlin-Raise3D-N-Series/blob/master/Marlin/Marlin_main.cpp) | [reference](https://marlinfw.org/docs/gcode/M204.html))
 Pro2's control panel randomly resets the acceleration and jerk settings. The default values are bit too high.  
-Cura's only adds some of these settings in the generated G-code.  
-Apply custom G-codes with M201, M204, M205 and M500 in the Start G-code instead.  
+Cura's only adds some of these settings in the generated G-code. It also uses obsolete code. It's minimum jerk is 1mm/s.
+Apply custom G-codes with M201, M204, M205 and M500 in the Printer Start G-code. Make sure they match with those in Cura.  
+Assume a bed gap of 0.1mm and 5mm/s bed travel speed, the minimum acceleration for the bed to not hit the nozzle can be calculated from the acceleration equation to be 50mm/s2.  
+1mm/s2 Horizontal Travel Jerk is fine. Too high a value causes over extrusion at the print corners. Set vertical travel jerk to be a multiple of the Z resolution.  
+Travel Acceleration should be sqrt(2)* Max XY Acceleration, assuming the XY accelerations are equal to each other.  
 
 ### Calibrate Extruder Offset from each other
 Print the calibration object in folder "CalibrationObjects/DualExtruderCalibration".  
@@ -136,7 +139,7 @@ Ideally, the inactive nozzle is swiped on the support to remove its ooze, period
 Sadly, Pro2's inactive nozzle does not automatically lower to be wiped on Cura's Prime Tower; neither can the head-lifting feature be disabled.  
   
 > Retract at Layer Change = False/False;
-> Retraction Distance = 2/2;  // I use 2mm as the default.
+> Retraction Distance = 0.5/0.5;  // Retraction Minimum Travel * Layer Height * Line Width / (pi * filamentDiameter^2)
 > Retraction Speed = 40/40mm/s; // From IdeaMaker, same as the E Max Speed
 > Combing Mode = Not in Skin;  
 > Max Comb Distance With No Retract = 15mm;  

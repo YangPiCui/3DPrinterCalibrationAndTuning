@@ -5,15 +5,13 @@ G21              ;Millimeter Units
 G90              ;Absolute Positioning
 M82              ;E Absolute
 
-;;;;;;; Use Pro2's control panel default settings instead ;;;;;;
-;M201 X250 Y250 Z25 E500                   ;Set max print and retract acceleration in mm/s^2. 
-;M204 P250 T250 R1000                       ;Set starting print, travel and retract accelaration
-;M205 X1 Y1 Z0.1 E4                        ;Sets the maximum allowable speed change (sometimes called 'jerk speed') of each motor when changing direction. 0 for infinite jerk.
-;M500                                      ;save 
+M204 P50 T50 R400                       ;Set starting print, travel and retract accelaration
+M201 X35 Y35 Z50 E400                   ;Set max print and retract acceleration in mm/s^2. 
+M205 X1 Y1 Z0.125 E1                        ;Sets the maximum allowable speed change (sometimes called 'jerk speed') of each motor when changing direction. 0 for infinite jerk.
+M500                                      ;save 
 
 G28 X0 Y0         ;Home XY
 G28 Z0 
-;G1 F6000          ;set default movement speed 
 M117 Printing...
 
 
