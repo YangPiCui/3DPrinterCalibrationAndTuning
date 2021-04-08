@@ -25,11 +25,11 @@ Printhead Dimension wrt 0th Nozzle ([how these values are defined](https://commu
   
 Extruder 0:    
 > Nozzle size = 0.4mm; // I used carbon hardened aftermarket steel nozzles. This saves me effort from changing nozzles.
-> Nozzle Flat = 1.2mm;
+> Nozzle Flat = 1.6mm;
   
 Extruder 1:    
 > Nozzle size = 0.3mm; 
-> Nozzle Flat = 1.2mm;
+> Nozzle Flat = 1.6mm;
 > Nozzle Offset X = 25.3; //This is relative to the 0th nozzle. This value needs to be tuned. 
 > Nozzle Offset Y = -0.2mm;
 > Cooling Fan Number = 1;  
@@ -51,7 +51,7 @@ Use MeasureXYZMaxSpeeds.gcode and a stop-watch.
 
 ### Level Print Bed
 0. Set the hotend and the bed at their intended printing temperatures. Hotend 210C; Buildplate 45C.  
-1. Level the print bed against the print head with a digital indicator. See [Bed Leveling/Tramming a Raise3D N2 or N2 Plus](https://www.youtube.com/watch?v=MXAk4eBr21g&ab_channel=ViceChief) I 3D-printed an adaptor to mount the digital indicator to the hot end clamps. See the CustomUpgrades folder.
+1. Remove the removable parts of the bed assembly. Level the print bed against the print head with a digital indicator. See [Bed Leveling/Tramming a Raise3D N2 or N2 Plus](https://www.youtube.com/watch?v=MXAk4eBr21g&ab_channel=ViceChief) I 3D-printed an adaptor to mount the digital indicator to the hot end clamps. See the CustomUpgrades folder.
 2. Level the entire printer with a bubble leveler placed on the print bed.  
 
 ### Tune Hotend and Printbed PIDs ([reference](https://reprap.org/wiki/PID_Tuning))  
@@ -70,42 +70,39 @@ References:
 * [Github](https://github.com/Raise3D/Marlin-Raise3D-N-Series/blob/master/Marlin/Marlin_main.cpp)
 * [Forum](https://forum.raise3d.com/viewtopic.php?t=16362)
   
-## 1. Set Slicer Parameters
+## 1. Set Initial Slicer Parameters
 Load default cura profile "Extra Fast", which has a layer height of 0.3mm.  
+Oozing is the bane of dual extrusion. I decided to deploy Pro2 as a single extruder system. For this to work, treat it as a dual extruder in Cura but only enable one of the extruders.  
   
-> Layer height = 0.3; //An integer multiple of the Z resolution and should be less than 80% of nozzle diameter. [stepper motor magic number](https://www.youtube.com/watch?v=WIkT8asT90A).  [Which layer height gives you the strongest 3D prints](https://www.youtube.com/watch?v=fbSQvJJjw2Q&t=644s).  
-> Initial Layer Height = 0.3-0.1 = 0.2; // Set the initial layer height (ILH) so that the distance from the buildplate is the layer height. I used a piece of paper 0.1mm thick to level the bed. ILH == multiple of Z-resolution && (<= 80% of nozzle size) 
-> Line Width = 0.7/0.3; //Prefer easy to remove support structure. Minimum Line Width = Nozzle Size + Layer Height;  Maximum Line Width = Nozzle Flat Size + Layer Height;  [understand line width](https://dyzedesign.com/2018/07/3d-print-speed-calculation-find-optimal-speed/#:~:text=A%20general%20rule%20of%20thumb,bigger%20nozzles%20and%20layer%20height.)
-> Support Extruder = Right Extruder;
-> Support Line Width = 0.3; // If the right extruder is selected as the support extruder, Cure automatically uses its line width as the support line width.
-  
-> Wall Extruder / Top Bottom Extruder = Left Extruder;  
+> Layer height = 0.3/0.15; //An integer multiple of the Z resolution and should be less than 80% of nozzle diameter. [stepper motor magic number](https://www.youtube.com/watch?v=WIkT8asT90A).  [Which layer height gives you the strongest 3D prints](https://www.youtube.com/watch?v=fbSQvJJjw2Q&t=644s).  
+> Initial Layer Height = 0.3-0.1 = 0.2/0.05; // Set the initial layer height (ILH) so that the distance from the buildplate is the layer height. I used a piece of paper 0.1mm thick to level the bed. ILH == multiple of Z-resolution && (<= 80% of nozzle size) 
+> Line Width = 0.7/0.45; //Minimum Line Width = Nozzle Size + Layer Height;  Maximum Line Width = Nozzle Flat Size + Layer Height;  [understand line width](https://dyzedesign.com/2018/07/3d-print-speed-calculation-find-optimal-speed/#:~:text=A%20general%20rule%20of%20thumb,bigger%20nozzles%20and%20layer%20height.)
+> Support Line Width = 0.3/0.3; //Experiment with a smaller than nozzle diameter support line width. If the right extruder is selected as the support extruder, Cure automatically uses its line width as the support line width.
+   
 > Wall Line Count = Top Layers = Bottom Layers = 4; //[1-2-3-4-5-6 layers <=> 5-10-15-20-25-30% Infill](https://www.youtube.com/watch?v=sAZpnlzCwiU) 
 > Infill = 20%;  
 > Top/Bottom Pattern = Bottom Pattern Initial Layer = Zig Zag;  //Prefer Top Bottom Layer number a multiple of 2 if Zig Zag
 > Optimize Wall Printing Order = True;  
 > Z Seam Alignment = Random;  
 > Print Thin Walls = True;  
-> Infill Extruder = Left Extruder;
 > Infill Pattern = Gyroid;  //[increased strength for the lowest weight.](https://support.ultimaker.com/hc/en-us/articles/360012607079-Infill-settings) [Testing 3D printed infill pattern.](https://www.youtube.com/watch?v=upELI0HmzHc)
 > Connect Infill Lines;  
 > Randomize Infill Start;  
 > Infill Travel Optimization = On;  
   
-### Set Temperature 
-> Printing Temperature = 210/210 Celsius;  // Set and use a temperature tower to tune later.
-> Initial / Final Printing Temperature / Standby Temperature = 210/210; // Set this to be equal to the print temperature to save print time.
-> Build Plate Temperature = 45;  //I levelled the bed at this temperature. Make the nozzle and bed reach their target temperature at the same time to save time.
-> Z Hop after Extruder Switch Height = 0mm/0mm;  // None-zero value cases layers to misalign.
+### Set Temperatures 
+> Printing Temperature = 200/195 Celsius;  // Set and use a temperature tower to tune later.
+> Initial / Final Printing Temperature / Standby Temperature = 200/195; // Set this to be equal to the print temperature to save print time.
+> Build Plate Temperature = 35;  //Prefer levelling the bed at this temperature. 
+> Z Hop after Extruder Switch Height = 0mm/0mm;  // Z Hop cases layers to misalign.
 
 ### Optimize Part Cooling
 I customized all fans to cool the hot end instead of the printed parts. 
 > Minimum Layer Time = 20s;  // Time required for a droplet of filament to cool and harden naturally.
-> Minimum Layer Speed = 0.5mm/s;  // Remove this constraint
+> Minimum Layer Speed = 0.5mm/s;  // Set a small value to remove the effect of this constraint
 
 ### Set Print Speed (extrusion rate)
-> Print Speed = 60/95; // Set to about 80% of [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/) for an even filament extrusion.  
-> Support Speed = ; // When selected, Cura automatically uses the second extruder's print speed as the support speed.
+> Print Speed = Support Speed = 75/130; // [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/) When the second extruder is selected as the support extruder, Cura automatically uses its print speed as the support speed.
 > Initial Layer Speed = 20mm/s; //[Tune First Layer.](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
 
 ### Optimize Acceleration and Jerk ([reference](https://github.com/Raise3D/Marlin-Raise3D-N-Series/blob/master/Marlin/Marlin_main.cpp) | [reference](https://marlinfw.org/docs/gcode/M204.html))
@@ -115,6 +112,7 @@ Apply custom G-codes with M201, M204, M205 and M500 in the Printer Start G-code.
 Assume a bed gap of 0.1mm and 5mm/s bed travel speed, the minimum acceleration for the bed to not hit the nozzle can be calculated from the acceleration equation to be 50mm/s2.  
 1mm/s2 Horizontal Travel Jerk is fine. Too high a value causes over extrusion at the print corners. Set vertical travel jerk to be a multiple of the Z resolution.  
 Travel Acceleration should be sqrt(2)* Max XY Acceleration, assuming the XY accelerations are equal to each other.  
+Set a high extrusion acceleration to avoid under extrusion towards the start of the line due to pressure lag.  
 
 ### Calibrate Extruder Offset from each other
 Print the calibration object in folder "CalibrationObjects/DualExtruderCalibration".  
@@ -124,44 +122,42 @@ Use Cura instead of Raise3D Pro2's console to apply these settings.
 [FlowRateCalibration.3mf](CalibrationObjects/FlowRateCalibration.3mf) Make sure you import the models only (without importing profiles)!  
 Wall Line Count = 2; 
 Top Layers = Bottom Layers = 0;  
-Infill Density = 0;  
-Build Plate Adhesion Type = Brim;    
+Infill Density = 0;    
   
 Corrected Flow Rate = Existing flow rate * Desired wall thickness / actual wall thickness
-> Flow = 103/95;
+> Flow = 95/95;
 (https://all3dp.com/1/common-3d-printing-problems-troubleshooting-3d-printer-issues/)
-> Initial Layer Flow = 100%*0.3/0.2 = 150; // compensates for the gap between the nozzle and the bed
+> Initial Layer Flow = 100%*0.3/0.2 = 150/300; // compensates for the gap between the nozzle and the bed
 
 ### Improve Bed Adhesion And Minimize Stringing And Oozing
+Use long skirt line instead of extruding waste material with start Gcode.  
+> Build Plate Adhesion Type = Skirt; // Set to none to print brim for features such as Support and the Prime Tower only
+> Build Plate Adhesion Extruder = ; // Use the secondary/support extruder to first draw the inside skirt line. This cleans waste material the best.
+> Skirt/Brim Minimum Length = 0/3; // Use a value of 0 to disable left extruder brim for the Prime Tower
+> Skirt Line Count = 2; 
+
+### Improve Surface Quality (Blobs, Zigs, Stringing and Oozing)
+[Blobs and Zigs](https://www.simplify3d.com/support/print-quality-troubleshooting/blobs-and-zits/)  
 Oozing is unavoidable. Molten filament droops under gravity.  
 Filament retraction does not suck the molten filament. It merely relieves downward pressure.   
 Ideally, the inactive nozzle is swiped on the support to remove its ooze, periodically and/or before it touches the printed area.  
 Sadly, Pro2's inactive nozzle does not automatically lower to be wiped on Cura's Prime Tower; neither can the head-lifting feature be disabled.  
   
 > Retract at Layer Change = False/False;
-> Retraction Distance = 0.5/0.5;  // Retraction Minimum Travel * Layer Height * Line Width / (pi * filamentDiameter^2)
+> Retraction Distance = 0.8/0.6;  // Proportional to nozzle diameter
 > Retraction Speed = 40/40mm/s; // From IdeaMaker, same as the E Max Speed
-> Combing Mode = Not in Skin;  
+> Travel Avoid Distance = 1/1; // Greater than half of nozzle flat diameter and multiple of XY resolution
+
+> Combing Mode = Not in Skin; //Move in printed area so that oozed material is deposited on top thereof.
 > Max Comb Distance With No Retract = 15mm;  
 > Retract Before Outer Wall = True;  
-  
-> Build Plate Adhesion Type = None; // Set to none to print brim for features such as Support and the Prime Tower only
-> Build Plate Adhesion Extruder = Right Extruder; // Use the secondary/support extruder to first draw the inside skirt line. This cleans waste material the best.
-> Skirt/Brim Minimum Length = 0/3; // Set to 0 to disable left extruder brim for the Prime Tower
-> Skirt Line Count = 3; 
 
-> Enable Prime Tower = True; 
-> Prime Tower Size = 10; //The prime tower's diameter should be larger than the nozzle separation for the inactive extruder's ooze to be cleaned onto it.
-> Prime Tower Minimum Volume = 1;
-> Wipe Inavtive Nozzle on Prime Tower = True; //Pro2's entire nozzle retracts, lessoning this feature's effectiveness
-> Nozzle Switch Retraction Distance = 8/8mm; //Unmolten, solid filament should clear the hotend assembly.
-> Nozzle Switch Retraction Speed = 40mm/s;
+> Enable Coasting = True;  //Coasting will turn off your extruder a short distance before the end of the perimeter to relieve the pressure that is built up within the nozzle
+> Coasting Volume = 0.1/; //
+> Coasting Speed = ;
 
-> Enable Ooze Shield = True;
+> Retract Extra Prime Amount = 0.1/0.1;//This should compensate for material oozed during combing and the coasting. Ideally, the slicer should calculate this value from the ooze speeds, both with and without retract, and the oozing time. For now, emperically estimate based on the coasting volume.
 
-At this point I have decided to deploy Pro2 as a single extruder system. Dual extrusion does not save filament. For this to work, treat it as a dual extruder in Cura but select the left extruder for everything.
- 
- 
 ### Determine Max Overhang Angle and Minimize Support Structure
 [How to calculate maximum overhang angle](https://omni3d.com/blog/how-to-calculate-maximum-overhang-angle/)   
 ![](TableOfMaxOverhangAngles.jpg)  
@@ -189,14 +185,21 @@ Skirt Minimum Length = 50mm;
 > Horizontal Expansion = Initial Layer Horizontal Expansion = -0.05; //use a vernier caliber
 > Hole Horizontal Expansion = 0.1; //positive value makes bigger holes
 
-### Additional Settings  
-
+### Miscellaneous Settings  
 > Maximum Resolution / Travel Resolution / Deviation / Minimum Polygon Circumference = 0.125mm;
 > Minimum Polygon Circumference = 0.016mm;
 > Slicing Tolerance = Inclusive;  
 > Use Adaptive Layers = True; //set to false by default.
-> Adaptive Layers Maximum Variation = 0.08; //half of line height  
-> Adaptive Layers Variation Setp Size = 0.04;  
-> Adaptive Layers Topography Size = 0.16; //same as line height
+> Adaptive Layers Maximum Variation = 0.05; //half of line height and ensure less than maximum layer height 
+> Adaptive Layers Variation Setp Size = 0.025;  // printer z step size
+> Adaptive Layers Topography Size = 0.15; //same as layer height
 
+### Dual Extrusion (Avoid)
+> Enable Prime Tower = True; 
+> Prime Tower Size = 10; //The prime tower's diameter should be larger than the nozzle separation for the inactive extruder's ooze to be cleaned onto it.
+> Prime Tower Minimum Volume = 1;
+> Wipe Inavtive Nozzle on Prime Tower = True; //Pro2's entire nozzle retracts, lessoning this feature's effectiveness
+> Nozzle Switch Retraction Distance = 8/8mm; //Unmolten, solid filament should clear the hotend assembly.
+> Nozzle Switch Retraction Speed = 40mm/s;
 
+> Enable Ooze Shield = True;

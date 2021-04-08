@@ -191,6 +191,6 @@ Print an overhang angle test object to confirm this.
 > Use Adaptive Layers = True; //set to false by default.
 > Adaptive Layers Maximum Variation = 0.08; //half of line height  
 > Adaptive Layers Variation Setp Size = 0.04;  
-> Adaptive Layers Topography Size = 0.16; //same as line height
+> Adaptive Layers Topography Size = 0.16; //same as layer height
 
 
