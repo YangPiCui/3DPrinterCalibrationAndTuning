@@ -112,9 +112,6 @@ Pro2's control panel randomly resets the acceleration and jerk settings. The def
 * Set a high extrusion acceleration to avoid under extrusion towards the start of the line due to pressure lag.   
 * Set acceleration and jerk to be a multiple of the Z resolution.  
 
-Too high an acceleration leads to under-extrusion at the start of a line because the pressure of the filament lags behind.  
-> Compensate Outer Wall OverLaps = false; // This setting causes under-extrusion at the start of lines.
-
 ### Calibrate Extruder Offset from each other
 Print the calibration object in folder "CalibrationObjects/DualExtruderCalibration".  
 Use Cura instead of Raise3D Pro2's console to apply these settings.
@@ -137,28 +134,6 @@ Use long skirt line instead of extruding waste material with start Gcode.
 > Skirt/Brim Minimum Length = 0/3; // Use a value of 0 to disable left extruder brim for the Prime Tower
 > Skirt Line Count = 2; 
 
-### Improve Surface Quality (Blobs, Zigs, Stringing and Oozing)
-[Blobs and Zigs](https://www.simplify3d.com/support/print-quality-troubleshooting/blobs-and-zits/)  
-Oozing is unavoidable. Molten filament droops under gravity.  
-Filament retraction does not suck the molten filament. It merely relieves downward pressure.   
-Ideally, the inactive nozzle is swiped on the support to remove its ooze, periodically and/or before it touches the printed area.  
-Sadly, Pro2's inactive nozzle does not automatically lower to be wiped on Cura's Prime Tower; neither can the head-lifting feature be disabled.  
-  
-> Retract at Layer Change = False/False;
-> Retraction Distance = 0.8/0.6;  // Proportional to nozzle diameter
-> Retraction Speed = 40/40mm/s; // From IdeaMaker, same as the E Max Speed
-> Travel Avoid Distance = 1/1; // Greater than half of nozzle flat diameter and multiple of XY resolution
-
-> Combing Mode = Not in Skin; //Move in printed area so that oozed material is deposited on top thereof.
-> Max Comb Distance With No Retract = 15mm;  
-> Retract Before Outer Wall = True;  
-
-> Enable Coasting = True;  //Coasting will turn off your extruder a short distance before the end of the perimeter to relieve the pressure that is built up within the nozzle
-> Coasting Volume = 0.064/; //
-> Coasting Speed = 10%;
-
-> Retract Extra Prime Amount = 0.064/;//This should compensate for material oozed during combing and the coasting. Ideally, the slicer should calculate this value from the ooze speeds, both with and without retract, and the oozing time. For now, emperically estimate starting from the coasting volume.
-
 ### Determine Max Overhang Angle and Minimize Support Structure
 [How to calculate maximum overhang angle](https://omni3d.com/blog/how-to-calculate-maximum-overhang-angle/)   
 ![](TableOfMaxOverhangAngles.jpg)  
@@ -175,6 +150,31 @@ Print an overhang angle test object to confirm this.
 > Support Density = 0;
 > Enable Support Brim = True;
 > Support Brim Line Count = 1;
+
+### Improve Surface Quality (Seams, Blobs, Zigs, Stringing and Oozing)
+[Blobs and Zigs](https://www.simplify3d.com/support/print-quality-troubleshooting/blobs-and-zits/)  
+Oozing is unavoidable. Molten filament droops under gravity.  
+Filament retraction does not suck the molten filament. It merely relieves downward pressure.   
+Ideally, the inactive nozzle is swiped on the support to remove its ooze, periodically and/or before it touches the printed area.  
+Sadly, Pro2's inactive nozzle does not automatically lower to be wiped on Cura's Prime Tower; neither can the head-lifting feature be disabled.  
+
+> Compensate Outer Wall OverLaps = false; // This setting causes under-extrusion at the start of lines.
+> Z Seam Alignment
+  
+> Retract at Layer Change = False/False;
+> Retraction Distance = 0.8/0.6;  // Proportional to nozzle diameter
+> Retraction Speed = 40/40mm/s; // From IdeaMaker, same as the E Max Speed
+> Travel Avoid Distance = 1/1; // Greater than half of nozzle flat diameter and multiple of XY resolution
+
+> Combing Mode = Not in Skin; //Move in printed area so that oozed material is deposited on top thereof.
+> Max Comb Distance With No Retract = 15mm;  
+> Retract Before Outer Wall = True;  
+
+> Enable Coasting = True;  //Coasting will turn off your extruder a short distance before the end of the perimeter to relieve the pressure that is built up within the nozzle
+> Coasting Volume = 0.064/; //
+> Coasting Speed = 10%;
+
+> Retract Extra Prime Amount = 0.064/;//This should compensate for material oozed during combing and the coasting. Ideally, the slicer should calculate this value from the ooze speeds, both with and without retract, and the oozing time. For now, emperically estimate starting from the coasting volume.
 
 ### Calibrate Horizontal Expansion [Print Some Test Objects At This Step] ([reference](https://www.youtube.com/watch?v=UUelLZvDelU) | [reference](https://bradshacks.com/3d-printing-tolerancing/))
 [HorizontalExpansionCalibration.3mf](CalibrationObjects/HorizontalExpansionCalibration.3mf) Use "import model" instead of "import project"! 
