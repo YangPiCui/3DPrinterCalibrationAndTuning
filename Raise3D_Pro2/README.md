@@ -102,17 +102,18 @@ I customized all fans to cool the hot end instead of the printed parts.
 > Minimum Layer Speed = 0.5mm/s;  // Set a small value to remove the effect of this constraint
 
 ### Set Print Speed (extrusion rate)
-> Print Speed = Support Speed = 75/130; // [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/) When the second extruder is selected as the support extruder, Cura automatically uses its print speed as the support speed.
+> Print Speed = Outer/Inner Wall Speed = Top/Bottom Speed = Support Speed = 75/130; // [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/) When the second extruder is selected as the support extruder, Cura automatically uses its print speed as the support speed.
 > Initial Layer Speed = 20mm/s; //[Tune First Layer.](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
 
 ### Optimize Acceleration and Jerk ([reference](https://github.com/Raise3D/Marlin-Raise3D-N-Series/blob/master/Marlin/Marlin_main.cpp) | [reference](https://marlinfw.org/docs/gcode/M204.html))
-Pro2's control panel randomly resets the acceleration and jerk settings. The default values are bit too high.  
-Cura's only adds some of these settings in the generated G-code. It also uses obsolete code. It's minimum jerk is 1mm/s.
-Apply custom G-codes with M201, M204, M205 and M500 in the Printer Start G-code. Make sure they match with those in Cura.  
-Assume a bed gap of 0.1mm and 5mm/s bed travel speed, the minimum acceleration for the bed to not hit the nozzle can be calculated from the acceleration equation to be 50mm/s2.  
-1mm/s2 Horizontal Travel Jerk is fine. Too high a value causes over extrusion at the print corners. Set vertical travel jerk to be a multiple of the Z resolution.  
-Travel Acceleration should be sqrt(2)* Max XY Acceleration, assuming the XY accelerations are equal to each other.  
-Set a high extrusion acceleration to avoid under extrusion towards the start of the line due to pressure lag.  
+Pro2's control panel randomly resets the acceleration and jerk settings. The default values are bit too high; and the minimum jerk value is only 1mm/s. Cura's uses deprecated G-code to apply these settings in the start G-code; its minimum jerk is 1mm/s. Apply custom G-codes with M201, M204, M205 and M500 in the Printer Start G-code instead.   
+* Assume a bed gap of 0.1mm and 5mm/s bed travel speed, the minimum acceleration for the bed to not hit the nozzle can be calculated from the acceleration equation to be 50mm/s2.  
+* Travel Acceleration should be sqrt(2)* Max XY Acceleration, assuming the XY accelerations are equal to each other.  
+* Set a high extrusion acceleration to avoid under extrusion towards the start of the line due to pressure lag.   
+* Set acceleration and jerk to be a multiple of the Z resolution.  
+
+Too high an acceleration leads to under-extrusion at the start of a line because the pressure of the filament lags behind.  
+> Compensate Outer Wall OverLaps = false; // This setting causes under-extrusion at the start of lines.
 
 ### Calibrate Extruder Offset from each other
 Print the calibration object in folder "CalibrationObjects/DualExtruderCalibration".  
@@ -153,10 +154,10 @@ Sadly, Pro2's inactive nozzle does not automatically lower to be wiped on Cura's
 > Retract Before Outer Wall = True;  
 
 > Enable Coasting = True;  //Coasting will turn off your extruder a short distance before the end of the perimeter to relieve the pressure that is built up within the nozzle
-> Coasting Volume = 0.1/; //
-> Coasting Speed = ;
+> Coasting Volume = 0.064/; //
+> Coasting Speed = 10%;
 
-> Retract Extra Prime Amount = 0.1/0.1;//This should compensate for material oozed during combing and the coasting. Ideally, the slicer should calculate this value from the ooze speeds, both with and without retract, and the oozing time. For now, emperically estimate based on the coasting volume.
+> Retract Extra Prime Amount = 0.064/;//This should compensate for material oozed during combing and the coasting. Ideally, the slicer should calculate this value from the ooze speeds, both with and without retract, and the oozing time. For now, emperically estimate starting from the coasting volume.
 
 ### Determine Max Overhang Angle and Minimize Support Structure
 [How to calculate maximum overhang angle](https://omni3d.com/blog/how-to-calculate-maximum-overhang-angle/)   
@@ -182,7 +183,7 @@ Build Plate Adhesion = Skirt;
 Skirt Line Count = 2;  
 Skirt Distance = 5mm;  
 Skirt Minimum Length = 50mm;  
-> Horizontal Expansion = Initial Layer Horizontal Expansion = -0.05; //use a vernier caliber
+> Horizontal Expansion = Initial Layer Horizontal Expansion = -0.05; //Negative value makes outside of the part smaller.
 > Hole Horizontal Expansion = 0.1; //positive value makes bigger holes
 
 ### Miscellaneous Settings  

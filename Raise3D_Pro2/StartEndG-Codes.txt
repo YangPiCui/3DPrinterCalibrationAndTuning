@@ -5,9 +5,9 @@ G21              ;Millimeter Units
 G90              ;Absolute Positioning
 M82              ;E Absolute
 
-M204 P100 T100 R10000                       ;Set starting print, travel and retract accelaration
-M201 X71 Y71 Z50 E10000                   ;Set max print and retract acceleration in mm/s^2. 
-M205 X1 Y1 Z0.125 E5                        ;Sets the maximum allowable speed change (sometimes called 'jerk speed') of each motor when changing direction. 0 for infinite jerk.
+M204 P42 T42 R10000                          ;Set starting print, travel and retract accelaration
+M201 X30 Y30 Z50 E10000                   ;Set max print and retract acceleration in mm/s^2. 
+M205 X0.125 Y0.125 Z0.025 E5                  ;Sets the maximum allowable speed change (sometimes called 'jerk speed') of each motor when changing direction. 0 for infinite jerk. 
 M500                                      ;save 
 
 G28 X0 Y0         ;Home XY

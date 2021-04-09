@@ -125,7 +125,7 @@ Build Plate Adhesion = Skirt;
 > Printing Temperature = 210 Celsius;  
 > Build Plate Temperature = 35;  //[reference](https://all3dp.com/2/the-best-pla-print-temperature-how-to-achieve-it/)  | [Correct elephant foot and print edge bending.]  
 
-### 1.4 Minimize Stringing [Print Some Test Objects At This Step] ([reference](https://all3dp.com/2/3d-print-stringing-easy-ways-to-prevent-it/) | [reference](https://www.thingiverse.com/thing:2219103))
+### Improve Surface Quality (Blobs, Zigs, Stringing and Oozing) [Print Some Test Objects At This Step] ([reference](https://all3dp.com/2/3d-print-stringing-easy-ways-to-prevent-it/) | [reference](https://www.thingiverse.com/thing:2219103))
 [StringTest.stl](CalibrationObjects/StringTest.stl)   
 Wall Line Count = 3;   
 Top Layers = Bottom Layers = 4;   
@@ -137,7 +137,13 @@ Build Plate Adhesion = skirt;
 > Retraction Speed = 30mm/s; // same as the E Max Speed
 > Combing Mode = Not in Skin;  
 > Max Comb Distance With No Retract = 15mm;  
+> Travel Avoid Distance = 1/1; // Greater than half of nozzle flat diameter and multiple of XY resolution
 > Z Hop When Retracted = False;  
+
+> Coasting Volume
+> Coasting Speed
+
+> Retraction Extra Prime Amount
   
 ### 1.5 Calibrate Flow Rate [Print Some Test Objects At This Step]  ([reference](https://e3d-online.dozuki.com/Guide/Flow+rate+%28Extrusion+multiplier%29+calibration+guide./89))  
 [FlowRateCalibration.3mf](CalibrationObjects/FlowRateCalibration.3mf) Make sure you import the models only (without importing profiles)!  
