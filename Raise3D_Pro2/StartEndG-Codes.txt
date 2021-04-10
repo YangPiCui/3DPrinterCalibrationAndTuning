@@ -7,7 +7,7 @@ M82              ;E Absolute
 
 M204 P500 T500 R3000                          ;Set starting print, travel and retract accelaration
 M201 X9000 Y9000 Z50 E10000                   ;Set max print and retract acceleration in mm/s^2. 
-M205 X5 Y5 Z0.5 E5                     ;Sets the max speed at which direction changes occur. 0 for infinite jerk. 
+M205 X20 Y20 Z0.05 E5                     ;Sets the max speed at which direction changes occur. 0 for infinite jerk. 
 M500                                          ;save 
 
 G28 X0 Y0         ;Home XY

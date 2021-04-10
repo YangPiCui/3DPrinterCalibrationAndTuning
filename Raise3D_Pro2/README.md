@@ -48,7 +48,7 @@ Default steps/mm E = 6640;  //(default setting should be also spot on)[https://f
 
 ### Measure Printer Max Mechanical Speed
 Use MeasureXYZMaxSpeeds.gcode and a stop-watch.  
-> X/Y Max Speed = 150mm/s; 
+> X/Y Max Speed = 150mm/s; //Appromimate average
 > Z Max Speed =  5mm/s; //Same as from IdeaMaker  
 > E Max Speed = 40mm/s; //From IdeaMaker; assumed.  
 
@@ -103,22 +103,21 @@ I customized all fans to cool the hot end instead of the printed parts.
 > Minimum Layer Time = 20s;  // Time required for a droplet of filament to cool and harden naturally.
 > Minimum Layer Speed = 0.25mm/s;  // Same as jerk, which is effectively the minimum speed. 
 
+### Tune Print Speed (extrusion rate), Jerk and Acceleration
 
-
-
-
-### Set Print Speed (extrusion rate)
-> Print Speed = Outer/Inner Wall Speed = Top/Bottom Speed = Support Speed = 75/130; // [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/) When the second extruder is selected as the support extruder, Cura automatically uses its print speed as the support speed.
+Ideally, the hotend assembly should always apply the user specified acceleration to decelerate into and accelerate from its lowest continuous mechanical speed (the speed below which motor ticking is apparent), as determined by the physical motors. As [jerk is the speed the hotend assembly slows down to on corners](https://community.ultimaker.com/topic/21306-how-to-prevent-overshoot-corners-or-round-edges/?do=findComment&comment=198640), the jerk value should be set to the minimum continuous mechanical speed. Due to a lack of the linear advance feature to compensate for the filament pressure change however, too slow a jerk value could make the hotend stay too long at the corners overextruding there. This is apparent in the test print image below. One can clearly see that a jerk value slower than print speed leads to uneven lines.  
+![](./Images/JerkTestPrint.jpg)   
+Therefore, set as high a XY jerk value as possible to minimize mechanical stress and set the print speed equal to the jerk value. Set as low a Z jerk as possible, which is also a multiple of the step size.  
+Cura uses deprecated G-code for these settings. Implement tweeked jerk an acceleration value in the start G-codes with the commands M201, M204, M205 and M500. [Marlin G-codes](https://marlinfw.org/docs/gcode/M204.html)).  
+> XY Jerk = Print Speed = Outer/Inner Wall Speed = Top/Bottom Speed = Support Speed = 20/20mm/s;  //Set jerk value to be a multiple of the travel resolution. When the second extruder is selected as the support extruder, Cura automatically uses its print speed as the support speed. 
 > Initial Layer Speed = 20mm/s; //[Tune First Layer.](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
+> Support Speed = 75/140; //Set support speed to be the [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/). 
+> Travel Speed = 150 //Max mechanical speed
+  
+With the jerk and print speed set, next tune the acceleration. Pro2's default acceleration of 500mm/s2 works.  
 
-### Optimize Acceleration and Jerk ([reference](https://github.com/Raise3D/Marlin-Raise3D-N-Series/blob/master/Marlin/Marlin_main.cpp) | [reference](https://marlinfw.org/docs/gcode/M204.html))
-The hotend assembly should always apply the user specified acceleration to decelerate into and accelerate from its lowest continuous mechanical speed (the speed below which motor ticking is apparent), as determined by the physical motors. 
-As [jerk is the speed the hotend assembly slows down to on corners](https://community.ultimaker.com/topic/21306-how-to-prevent-overshoot-corners-or-round-edges/?do=findComment&comment=198640), it should be set to the minimum continuous mechanical speed. Due to a lack of linear advance, the hotend could dwell too long at the corners overextruding. 
-Pro2's default jerk and acceleration values work fine. However, Both Pro2's console and Cura only allow 1mm/s as the lowest XY jerk resolution. In addition, Cura uses deprecated G-code for these settings. Therfore, implement tweeked G-codes with M201, M204, M205 and M500 in the Printer Start G-code satisfying the following additional criteria:     
-* Assume a bed gap of 0.1mm and 5mm/s bed travel speed, the minimum acceleration for the bed to not hit the nozzle can be calculated from the acceleration equation to be 50mm/s2.  
-* Set acceleration and jerk to be a multiple of the Z resolution.  
 
-![](./Images/JerkTestPrint.jpg)
+* Assume a bed gap of 0.1mm and 5mm/s bed travel speed, the minimum acceleration for the bed to not hit the nozzle can be calculated from the acceleration equation to be 50mm/s2.   
 
 
 ### Calibrate Extruder Offset from each other
