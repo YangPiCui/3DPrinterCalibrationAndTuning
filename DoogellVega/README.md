@@ -111,7 +111,8 @@ The Cura settings alone doesn't affect printer acceleration. Put these values in
 ### 1.1 Optimize Cooling
 > Enable Print Cooling = false; //I prefer natural cooling for better layer bonding  
   
-Adjust the minimum layer time.
+Minimum layer time = 20;
+Minimum Speed = 0.25;
   
 
 ### 1.2 Tune Hotend PID ([reference](https://reprap.org/wiki/PID_Tuning)) 
@@ -133,12 +134,13 @@ Infill Density = 15;
 Support = No;  
 Build Plate Adhesion = skirt;  
 > Retract Before Outer Wall = True;  
-> Retraction Distance = 2mm;  
+> Retraction Distance = .8mm;  
 > Retraction Speed = 30mm/s; // same as the E Max Speed
 > Combing Mode = Not in Skin;  
 > Max Comb Distance With No Retract = 15mm;  
 > Travel Avoid Distance = 1/1; // Greater than half of nozzle flat diameter and multiple of XY resolution
 > Z Hop When Retracted = False;  
+> Travel Avoid Distance = 1mm; // take nozzle flat into account
 
 > Coasting Volume
 > Coasting Speed

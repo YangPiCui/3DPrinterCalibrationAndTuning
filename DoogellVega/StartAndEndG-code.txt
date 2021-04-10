@@ -1,10 +1,4 @@
 ;Start of Printer G-code
-;Sliced at: {day} {date} {time}
-;Basic settings: Layer height: {layer_height} Walls: {wall_thickness} Fill: {fill_density}
-;Print time: {print_time}
-;Filament used: {filament_amount}m {filament_weight}g
-;Filament cost: {filament_cost}
-
 M17        ;enable stepper motor idle hold for glass bed
 M18 S0     ;disable stepper motor idle timeout for glass bed
 
@@ -16,9 +10,9 @@ M107       ;start with the fan off
 M92 E96.5                         ;set extruder steps/mm
 M92 X79.872 Y80.267 Z400.76       ;set XYZ steps/mm
 M301 P10 I2.5 D100                ;set hotend PID
-M201 X250 Y250 Z20 E9999          ;Set max print acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
-M202 X250 Y250 Z20 E9999          ;Set max travel acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
-M566 X0.001 Y0.001 Z0.001 E9999   ;Sets the maximum allowable speed change (sometimes called 'jerk speed') of each motor when changing direction. 0 for infinite jerk.
+M201 X300 Y300 Z50 E9999          ;Set max print acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
+M202 X300 Y300 Z50 E9999          ;Set max travel acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
+M566 X0.25 Y0.25 Z0.04 E9999   ;Sets the maximum allowable speed change (sometimes called 'jerk speed') of each motor when changing direction. 0 for infinite jerk.
 M500                              ;save 
 
 G28		           ;performe homing routine

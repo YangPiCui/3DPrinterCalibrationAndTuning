@@ -1,8 +1,11 @@
 # [Raise3D Pro2](https://www.raise3d.com/products/pro2-3d-printer/) 
+![](./Images/Raised3DPro2.jpg)
 Bought 2nd hand for $2600.  
-Instruction is based on the Cura Slicer which has the Tree Support Structure.
+This printer lacks water cooling and needs the linear advance feature.  
+Coasting cannot compensate for linear advance because one, there is no feature to compensate for the material lost during coasting; two, the amount of coasted material depends on the print speed.  
+Instruction is based on the Cura Slicer which has the Tree Support Structure.  
 a temporary value = 0.1;  //comments  
-> Filament Diameter = 1.75mm; // a permanent setting 
+> Filament Diameter = 1.75mm; // a permanent setting   
 
 ## 0. Calibrate Printer
 
@@ -83,7 +86,6 @@ Oozing is the bane of dual extrusion. I decided to deploy Pro2 as a single extru
 > Infill = 20%;  
 > Top/Bottom Pattern = Bottom Pattern Initial Layer = Zig Zag;  //Prefer Top Bottom Layer number a multiple of 2 if Zig Zag
 > Optimize Wall Printing Order = True;  
-> Z Seam Alignment = Random;  
 > Print Thin Walls = True;  
 > Infill Pattern = Gyroid;  //[increased strength for the lowest weight.](https://support.ultimaker.com/hc/en-us/articles/360012607079-Infill-settings) [Testing 3D printed infill pattern.](https://www.youtube.com/watch?v=upELI0HmzHc)
 > Connect Infill Lines;  
@@ -97,20 +99,27 @@ Oozing is the bane of dual extrusion. I decided to deploy Pro2 as a single extru
 > Z Hop after Extruder Switch Height = 0mm/0mm;  // Z Hop cases layers to misalign.
 
 ### Optimize Part Cooling
-I customized all fans to cool the hot end instead of the printed parts. 
+I customized all fans to cool the hot end instead of the printed parts.  
 > Minimum Layer Time = 20s;  // Time required for a droplet of filament to cool and harden naturally.
-> Minimum Layer Speed = 0.5mm/s;  // Set a small value to remove the effect of this constraint
+> Minimum Layer Speed = 0.25mm/s;  // Same as jerk, which is effectively the minimum speed. 
+
+
+
+
 
 ### Set Print Speed (extrusion rate)
 > Print Speed = Outer/Inner Wall Speed = Top/Bottom Speed = Support Speed = 75/130; // [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/) When the second extruder is selected as the support extruder, Cura automatically uses its print speed as the support speed.
 > Initial Layer Speed = 20mm/s; //[Tune First Layer.](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
 
 ### Optimize Acceleration and Jerk ([reference](https://github.com/Raise3D/Marlin-Raise3D-N-Series/blob/master/Marlin/Marlin_main.cpp) | [reference](https://marlinfw.org/docs/gcode/M204.html))
-Pro2's control panel randomly resets the acceleration and jerk settings. The default values are bit too high; and the minimum jerk value is only 1mm/s. Cura's uses deprecated G-code to apply these settings in the start G-code; its minimum jerk is 1mm/s. Apply custom G-codes with M201, M204, M205 and M500 in the Printer Start G-code instead.   
+The hotend assembly should always apply the user specified acceleration to decelerate into and accelerate from its lowest continuous mechanical speed (the speed below which motor ticking is apparent), as determined by the physical motors. 
+As [jerk is the speed the hotend assembly slows down to on corners](https://community.ultimaker.com/topic/21306-how-to-prevent-overshoot-corners-or-round-edges/?do=findComment&comment=198640), it should be set to the minimum continuous mechanical speed. Due to a lack of linear advance, the hotend could dwell too long at the corners overextruding. 
+Pro2's default jerk and acceleration values work fine. However, Both Pro2's console and Cura only allow 1mm/s as the lowest XY jerk resolution. In addition, Cura uses deprecated G-code for these settings. Therfore, implement tweeked G-codes with M201, M204, M205 and M500 in the Printer Start G-code satisfying the following additional criteria:     
 * Assume a bed gap of 0.1mm and 5mm/s bed travel speed, the minimum acceleration for the bed to not hit the nozzle can be calculated from the acceleration equation to be 50mm/s2.  
-* Travel Acceleration should be sqrt(2)* Max XY Acceleration, assuming the XY accelerations are equal to each other.  
-* Set a high extrusion acceleration to avoid under extrusion towards the start of the line due to pressure lag.   
 * Set acceleration and jerk to be a multiple of the Z resolution.  
+
+![](./Images/JerkTestPrint.jpg)
+
 
 ### Calibrate Extruder Offset from each other
 Print the calibration object in folder "CalibrationObjects/DualExtruderCalibration".  
@@ -127,7 +136,7 @@ Corrected Flow Rate = Existing flow rate * Desired wall thickness / actual wall 
 (https://all3dp.com/1/common-3d-printing-problems-troubleshooting-3d-printer-issues/)
 > Initial Layer Flow = 100%*0.3/0.2 = 150/300; // compensates for the gap between the nozzle and the bed
 
-### Improve Bed Adhesion And Minimize Stringing And Oozing
+### Improve Bed Adhesion 
 Use long skirt line instead of extruding waste material with start Gcode.  
 > Build Plate Adhesion Type = Skirt; // Set to none to print brim for features such as Support and the Prime Tower only
 > Build Plate Adhesion Extruder = ; // Use the secondary/support extruder to first draw the inside skirt line. This cleans waste material the best.
@@ -140,16 +149,17 @@ Use long skirt line instead of extruding waste material with start Gcode.
 Print an overhang angle test object to confirm this. 
 
 > Tree Support Branch Angle = 20; // This depends on the layer height and line width of the tree support walls
-> Tree Support Branch Distance = 1.5;
-> Tree Support Branch Diameter = 2.5;
+> Tree Support Branch Distance = Tree Support Branch Diameter = 1.4;  //multiple of line width
 > Tree Support Branch Diameter Angle = 2.5;
-> Tree Support Collision Resolution = 0.125; //multiple of z resolution
-> Support Placement = Everywhere; // This is fine with thin support wall
+> Tree Support Collision Resolution = 0.125; //multiple of resolution
+> Support Placement = Everywhere; // works well with a thin support wall
 > Support Overhang Angle = 41;
 > Support Wall Line Count = 1;
 > Support Density = 0;
 > Enable Support Brim = True;
 > Support Brim Line Count = 1;
+> Support Top Distance = Support XY Distance = 0.6;  //twice layer height
+> Support Stair Step Height = 0;
 
 ### Improve Surface Quality (Seams, Blobs, Zigs, Stringing and Oozing)
 [Blobs and Zigs](https://www.simplify3d.com/support/print-quality-troubleshooting/blobs-and-zits/)  
@@ -158,23 +168,21 @@ Filament retraction does not suck the molten filament. It merely relieves downwa
 Ideally, the inactive nozzle is swiped on the support to remove its ooze, periodically and/or before it touches the printed area.  
 Sadly, Pro2's inactive nozzle does not automatically lower to be wiped on Cura's Prime Tower; neither can the head-lifting feature be disabled.  
 
-> Compensate Outer Wall OverLaps = false; // This setting causes under-extrusion at the start of lines.
-> Z Seam Alignment
-  
-> Retract at Layer Change = False/False;
-> Retraction Distance = 0.8/0.6;  // Proportional to nozzle diameter
+[Linear Advance](https://www.youtube.com/watch?v=n3yK0lJ8TWM&ab_channel=TeachingTech) minimizes Z Seams and blobs. Unfortunately [the pro2 doesn't have this feature yet.](https://forum.raise3d.com/viewtopic.php?t=21018)  Slow prints to compensate for now.  
+> Z Seam Alignment = Random;  
+ 
+
+> Retraction Distance = 0.8/0.8;  // Proportional to nozzle diameter
 > Retraction Speed = 40/40mm/s; // From IdeaMaker, same as the E Max Speed
-> Travel Avoid Distance = 1/1; // Greater than half of nozzle flat diameter and multiple of XY resolution
+
+> Limit Support Retractions = False;  
 
 > Combing Mode = Not in Skin; //Move in printed area so that oozed material is deposited on top thereof.
 > Max Comb Distance With No Retract = 15mm;  
 > Retract Before Outer Wall = True;  
+> Travel Avoid Distance = 1/1; // Greater than half of nozzle flat diameter and multiple of XY resolution
 
-> Enable Coasting = True;  //Coasting will turn off your extruder a short distance before the end of the perimeter to relieve the pressure that is built up within the nozzle
-> Coasting Volume = 0.064/; //
-> Coasting Speed = 10%;
 
-> Retract Extra Prime Amount = 0.064/;//This should compensate for material oozed during combing and the coasting. Ideally, the slicer should calculate this value from the ooze speeds, both with and without retract, and the oozing time. For now, emperically estimate starting from the coasting volume.
 
 ### Calibrate Horizontal Expansion [Print Some Test Objects At This Step] ([reference](https://www.youtube.com/watch?v=UUelLZvDelU) | [reference](https://bradshacks.com/3d-printing-tolerancing/))
 [HorizontalExpansionCalibration.3mf](CalibrationObjects/HorizontalExpansionCalibration.3mf) Use "import model" instead of "import project"! 
