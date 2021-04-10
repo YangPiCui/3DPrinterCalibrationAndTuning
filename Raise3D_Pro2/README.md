@@ -3,6 +3,7 @@
 Bought 2nd hand for $2600.  
 This printer lacks water cooling and needs the linear advance feature.  
 Coasting cannot compensate for linear advance because one, there is no feature to compensate for the material lost during coasting; two, the amount of coasted material depends on the print speed.  
+[Questioning Pro2 Product Quality - Ongoing Issues](https://forum.raise3d.com/viewtopic.php?f=18&t=15999&sid=b55814a84943acde992d9dc563f45d35)  
 Instruction is based on the Cura Slicer which has the Tree Support Structure.  
 a temporary value = 0.1;  //comments  
 > Filament Diameter = 1.75mm; // a permanent setting   
@@ -104,7 +105,6 @@ I customized all fans to cool the hot end instead of the printed parts.
 > Minimum Layer Speed = 0.25mm/s;  // Same as jerk, which is effectively the minimum speed. 
 
 ### Tune Print Speed (extrusion rate), Jerk and Acceleration
-
 Ideally, the hotend assembly should always apply the user specified acceleration to decelerate into and accelerate from its lowest continuous mechanical speed (the speed below which motor ticking is apparent), as determined by the physical motors. As [jerk is the speed the hotend assembly slows down to on corners](https://community.ultimaker.com/topic/21306-how-to-prevent-overshoot-corners-or-round-edges/?do=findComment&comment=198640), the jerk value should be set to the minimum continuous mechanical speed. Due to a lack of the linear advance feature to compensate for the filament pressure change however, too slow a jerk value could make the hotend stay too long at the corners overextruding there. This is apparent in the test print image below. One can clearly see that a jerk value slower than print speed leads to uneven lines.  
 ![](./Images/JerkTestPrint.jpg)   
 Therefore, set as high a XY jerk value as possible to minimize mechanical stress and set the print speed equal to the jerk value. Set as low a Z jerk as possible, which is also a multiple of the step size.  
@@ -114,11 +114,7 @@ Cura uses deprecated G-code for these settings. Implement tweeked jerk an accele
 > Support Speed = 75/140; //Set support speed to be the [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/). 
 > Travel Speed = 150 //Max mechanical speed
   
-With the jerk and print speed set, next tune the acceleration. Pro2's default acceleration of 500mm/s2 works.  
-
-
-* Assume a bed gap of 0.1mm and 5mm/s bed travel speed, the minimum acceleration for the bed to not hit the nozzle can be calculated from the acceleration equation to be 50mm/s2.   
-
+With the jerk and print speed set, next tune the acceleration. Assume a bed gap of 0.1mm and 5mm/s bed travel speed, the minimum acceleration for the bed to not hit the nozzle can be calculated from the acceleration equation to be 50mm/s2. Pro2's default XY acceleration of 500mm/s2 works.   
 
 ### Calibrate Extruder Offset from each other
 Print the calibration object in folder "CalibrationObjects/DualExtruderCalibration".  
@@ -169,19 +165,12 @@ Sadly, Pro2's inactive nozzle does not automatically lower to be wiped on Cura's
 
 [Linear Advance](https://www.youtube.com/watch?v=n3yK0lJ8TWM&ab_channel=TeachingTech) minimizes Z Seams and blobs. Unfortunately [the pro2 doesn't have this feature yet.](https://forum.raise3d.com/viewtopic.php?t=21018)  Slow prints to compensate for now.  
 > Z Seam Alignment = Random;  
- 
-
 > Retraction Distance = 0.8/0.8;  // Proportional to nozzle diameter
 > Retraction Speed = 40/40mm/s; // From IdeaMaker, same as the E Max Speed
-
-> Limit Support Retractions = False;  
-
 > Combing Mode = Not in Skin; //Move in printed area so that oozed material is deposited on top thereof.
 > Max Comb Distance With No Retract = 15mm;  
 > Retract Before Outer Wall = True;  
 > Travel Avoid Distance = 1/1; // Greater than half of nozzle flat diameter and multiple of XY resolution
-
-
 
 ### Calibrate Horizontal Expansion [Print Some Test Objects At This Step] ([reference](https://www.youtube.com/watch?v=UUelLZvDelU) | [reference](https://bradshacks.com/3d-printing-tolerancing/))
 [HorizontalExpansionCalibration.3mf](CalibrationObjects/HorizontalExpansionCalibration.3mf) Use "import model" instead of "import project"! 
