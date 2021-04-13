@@ -10,24 +10,19 @@ M107       ;start with the fan off
 M92 E96.5                         ;set extruder steps/mm
 M92 X79.872 Y80.267 Z400.76       ;set XYZ steps/mm
 M301 P10 I2.5 D100                ;set hotend PID
-M201 X300 Y300 Z50 E9999          ;Set max print acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
-M202 X300 Y300 Z50 E9999          ;Set max travel acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
-M566 X0.25 Y0.25 Z0.04 E9999   ;Sets the maximum allowable speed change (sometimes called 'jerk speed') of each motor when changing direction. 0 for infinite jerk.
+M201 X400 Y400 Z50 E3000          ;Set max print acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
+M202 X400 Y400 Z50 E3000          ;Set max travel acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
+M566 X20 Y20 Z0.04 E5             ;Sets the maximum speed before entering into corners. 0 for infinite jerk.
 M500                              ;save 
 
 G28		           ;performe homing routine
 
 G92 E0                ;reset the extruder position to 0mm
 G1 F100               ;set feedrate to 100mm/minute
-G1 Z30 E5             ;move the plateform down 30mm while ejecting 5mm of filament
+G1 Z10 E2             ;move the plateform down 10mm while ejecting 2mm of filament
 G92 E0               
 
-
-
-
-
-
-
+============================================================
 ;End of Printer G-code
 M104 S0                                ;turn off heating the extruder
 M140 S0                                ;turn off heating the bed
@@ -36,4 +31,9 @@ G90									   ;set to absolute positioning
 G28 X Y                                ;move hot end to home position
 M84                                    ;turn off stepper motors
 ;{profile_string}
+
+================================================================
+M201 X250 Y250 Z50 E9999          ;Set max print acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
+M202 X250 Y250 Z50 E9999          ;Set max travel acceleration in mm/s^2. Z Accleration = 20mm/s for heavy glass bed.  
+M566 X0.01 Y0.01 Z0.01 E9999   ;Sets the maximum allowable speed change (sometimes called 'jerk speed') of each motor when changing direction. 0 for infinite jerk.
 

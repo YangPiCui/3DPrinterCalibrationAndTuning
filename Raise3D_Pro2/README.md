@@ -102,7 +102,7 @@ Oozing is the bane of dual extrusion. I decided to deploy Pro2 as a single extru
 ### Optimize Part Cooling
 I customized all fans to cool the hot end instead of the printed parts.  
 > Minimum Layer Time = 20s;  // Time required for a droplet of filament to cool and harden naturally.
-> Minimum Layer Speed = 0.25mm/s;  // Same as jerk, which is effectively the minimum speed. 
+> Minimum Layer Speed = 4mm/s;  // Same as jerk, which is effectively the minimum speed. 
 
 ### Tune Print Speed (extrusion rate), Jerk and Acceleration
 Ideally, the hotend assembly should always apply the user specified acceleration to decelerate into and accelerate from its lowest continuous mechanical speed (the speed below which motor ticking is apparent), as determined by the physical motors. As [jerk is the speed the hotend assembly slows down to on corners](https://community.ultimaker.com/topic/21306-how-to-prevent-overshoot-corners-or-round-edges/?do=findComment&comment=198640), the jerk value should be set to the minimum continuous mechanical speed. Due to a lack of the linear advance feature to compensate for the filament pressure change however, too slow a jerk value could make the hotend stay too long at the corners overextruding there. This is apparent in the test print image below. One can clearly see that a jerk value slower than print speed leads to uneven lines.  
@@ -115,6 +115,8 @@ Cura uses deprecated G-code for these settings. Implement tweeked jerk an accele
 > Travel Speed = 150 //Max mechanical speed
   
 With the jerk and print speed set, next tune the acceleration. Assume a bed gap of 0.1mm and 5mm/s bed travel speed, the minimum acceleration for the bed to not hit the nozzle can be calculated from the acceleration equation to be 50mm/s2. Pro2's default XY acceleration of 500mm/s2 works.   
+
+At the end I tuned jerk and acceleration to minimize printer's mechanical stress.  
 
 ### Calibrate Extruder Offset from each other
 Print the calibration object in folder "CalibrationObjects/DualExtruderCalibration".  
