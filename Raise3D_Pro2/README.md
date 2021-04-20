@@ -49,8 +49,8 @@ Default steps/mm E = 6640;  //(default setting should be also spot on)[https://f
 
 ### Measure Printer Max Mechanical Speed
 Use MeasureXYZMaxSpeeds.gcode and a stop-watch.  
-> X/Y Max Speed = 150mm/s; //Appromimate average
-> Z Max Speed =  5mm/s; //Same as from IdeaMaker  
+> X/Y Max Speed = 50mm/s; //Measured
+> Z Max Speed =  5mm/s; //Measured  
 > E Max Speed = 40mm/s; //From IdeaMaker; assumed.  
 
 ### Level Print Bed
