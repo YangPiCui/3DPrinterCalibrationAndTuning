@@ -23,17 +23,17 @@ a temporary value = 0.1;  //comments
 > Max hotend temperature = 260;  
 > Max bed temperature = 70;  
 > X direction = ↓; X range = 0-250; //Positive direction from the back to the front  
-> Y direction = →, Y range = 0-260; //Belt starts to slip at 294  
+> Y direction = →, Y range = 0-240; //Belt starts to slip at 294; fan mod limits travel to 240
 > Z direction = up, Z range = 0-200; //for glass bed; Default is 300.   
 > X/Y resolution = 0.1mm;  
 > Z resolution = 0.04mm;  
   
 Printhead ([how these values are defined](https://community.ultimaker.com/topic/18484-printhead-settings/))  
-> X min = -29; //measured in the negative x direction  
-> Y min = -37; //measured in the negative y direction  
+> X min = -29-9; //measured in the negative x direction  
+> Y min = -37-12; //measured in the negative y direction  
 > X max = 60; //measured in the positive x direction  
-> Y max = 37; //measured in the positive y direction  
-> Gantry Height = 92mm; //the lowest point on the rails in which the extruder assembly rides to the print bed when the nozzle is at height Z=0   
+> Y max = 37+13; //measured in the positive y direction  
+> Gantry Height = 92+13mm; //the lowest point on the rails in which the extruder assembly rides to the print bed when the nozzle is at height Z=0   
   
 Extruder 0:    
 > Nozzle size = 0.3mm; //default 0.4mm

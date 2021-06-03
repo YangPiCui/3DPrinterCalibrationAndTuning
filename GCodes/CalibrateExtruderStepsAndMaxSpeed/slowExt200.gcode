@@ -9,5 +9,5 @@ G0 Z50            ;move the platform down 50mm
 G1 F300         ;set a slower feedrate
 
 G92 E0           ;reset the extruder position to 0mm
-G1 E200          ;extrude 100mm of material
+G1 E200          ;extrude 200mm of material
 G92 E0           ;reset the extruder position to 0mm

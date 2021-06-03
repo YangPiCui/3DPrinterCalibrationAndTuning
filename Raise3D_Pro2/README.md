@@ -21,11 +21,11 @@ a temporary value = 0.1;  //comments
 > Z resolution = 0.00078125mm; // A layer height of 0.3mm is an integer multiple of the Z resolution.
   
 Printhead Dimension wrt 0th Nozzle ([how these values are defined](https://community.ultimaker.com/topic/18484-printhead-settings/))  
-> X min = -37; //measured in the negative x direction  
-> Y min = -45; //measured in the negative y direction  
+> X min = -37+3; //measured in the negative x direction  
+> Y min = -45-12; //measured in the negative y direction  
 > X max = 63; //measured in the positive x direction  
 > Y max = 70; //measured in the positive y direction  
-> Gantry Height = 65mm; //the lowest point on the rails in which the extruder assembly rides to the print bed when the nozzle is at height Z=0   
+> Gantry Height = 65+5mm; //the lowest point on the rails in which the extruder assembly rides to the print bed when the nozzle is at height Z=0   
   
 Extruder 0:    
 > Nozzle size = 0.4mm; // I used carbon hardened aftermarket steel nozzles. This saves me effort from changing nozzles.
@@ -92,7 +92,19 @@ Oozing is the bane of dual extrusion. I decided to deploy Pro2 as a single extru
 > Connect Infill Lines;  
 > Randomize Infill Start;  
 > Infill Travel Optimization = On;  
+
+### Tune Print Speed (extrusion rate), Jerk and Acceleration
+Ideally, the hotend assembly should always apply the user specified acceleration to decelerate into and accelerate from its lowest continuous mechanical speed (the speed below which motor ticking is apparent), as determined by the physical motors. As [jerk is the speed the hotend assembly slows down to on corners](https://community.ultimaker.com/topic/21306-how-to-prevent-overshoot-corners-or-round-edges/?do=findComment&comment=198640), the jerk value should be set to the minimum continuous mechanical speed. Due to a lack of the linear advance feature to compensate for the filament pressure change however, too slow a jerk value could make the hotend stay too long at the corners overextruding there. This is apparent in the test print image below. One can clearly see that a jerk value slower than print speed leads to uneven lines.  
+![](./Images/JerkTestPrint.jpg)   
+Therefore, set as high a XY jerk value as possible to minimize mechanical stress and set the print speed equal to the jerk value. Set as low a Z jerk as possible, which is also a multiple of the step size.  
+Cura uses deprecated G-code for these settings. Implement tweeked jerk an acceleration value in the start G-codes with the commands M201, M204, M205 and M500. [Marlin G-codes](https://marlinfw.org/docs/gcode/M204.html)).  
+> XY Jerk = Print Speed = Outer/Inner Wall Speed = Top/Bottom Speed = Support Speed = 20/20mm/s;  //Set jerk value to be a multiple of the travel resolution. Oozing determines the minimum jerk speed. Print speed should be <50% of the [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/) When the second extruder is selected as the support extruder, Cura automatically uses its print speed as the support speed. 
+> Initial Layer Speed = 20mm/s; //[Tune First Layer.](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
+> Support Speed = 75/140; // set to <80% of the max print speed.
+> Travel Speed = 150 //Max mechanical speed
   
+With the jerk and print speed set, next tune the acceleration. Assume a bed gap of 0.1mm and 5mm/s bed travel speed, the minimum acceleration for the bed to not hit the nozzle can be calculated from the acceleration equation to be 50mm/s2. Pro2's default jerk of 5mm/s and XY acceleration of 500mm/s2 works well.   
+ 
 ### Set Temperatures 
 > Printing Temperature = 200/195 Celsius;  // Set and use a temperature tower to tune later.
 > Initial / Final Printing Temperature / Standby Temperature = 200/195; // Set this to be equal to the print temperature to save print time.
@@ -104,30 +116,12 @@ I customized all fans to cool the hot end instead of the printed parts.
 > Minimum Layer Time = 20s;  // Time required for a droplet of filament to cool and harden naturally.
 > Minimum Layer Speed = 4mm/s;  // Same as jerk, which is effectively the minimum speed. 
 
-### Tune Print Speed (extrusion rate), Jerk and Acceleration
-Ideally, the hotend assembly should always apply the user specified acceleration to decelerate into and accelerate from its lowest continuous mechanical speed (the speed below which motor ticking is apparent), as determined by the physical motors. As [jerk is the speed the hotend assembly slows down to on corners](https://community.ultimaker.com/topic/21306-how-to-prevent-overshoot-corners-or-round-edges/?do=findComment&comment=198640), the jerk value should be set to the minimum continuous mechanical speed. Due to a lack of the linear advance feature to compensate for the filament pressure change however, too slow a jerk value could make the hotend stay too long at the corners overextruding there. This is apparent in the test print image below. One can clearly see that a jerk value slower than print speed leads to uneven lines.  
-![](./Images/JerkTestPrint.jpg)   
-Therefore, set as high a XY jerk value as possible to minimize mechanical stress and set the print speed equal to the jerk value. Set as low a Z jerk as possible, which is also a multiple of the step size.  
-Cura uses deprecated G-code for these settings. Implement tweeked jerk an acceleration value in the start G-codes with the commands M201, M204, M205 and M500. [Marlin G-codes](https://marlinfw.org/docs/gcode/M204.html)).  
-> XY Jerk = Print Speed = Outer/Inner Wall Speed = Top/Bottom Speed = Support Speed = 20/20mm/s;  //Set jerk value to be a multiple of the travel resolution. When the second extruder is selected as the support extruder, Cura automatically uses its print speed as the support speed. 
-> Initial Layer Speed = 20mm/s; //[Tune First Layer.](https://www.youtube.com/watch?v=pAFDEn3wGYo)  
-> Support Speed = 75/140; //Set support speed to be the [Maximum 3D Printing Speed](https://dyzedesign.com/3d-printing-speed-calculator/). 
-> Travel Speed = 150 //Max mechanical speed
-  
-With the jerk and print speed set, next tune the acceleration. Assume a bed gap of 0.1mm and 5mm/s bed travel speed, the minimum acceleration for the bed to not hit the nozzle can be calculated from the acceleration equation to be 50mm/s2. Pro2's default XY acceleration of 500mm/s2 works.   
-
-At the end I tuned jerk and acceleration to minimize printer's mechanical stress.  
-
-### Calibrate Extruder Offset from each other
-Print the calibration object in folder "CalibrationObjects/DualExtruderCalibration".  
-Use Cura instead of Raise3D Pro2's console to apply these settings.
-
-### Calibrate Flow Rate [Print Some Test Objects At This Step]  ([reference](https://e3d-online.dozuki.com/Guide/Flow+rate+%28Extrusion+multiplier%29+calibration+guide./89))  
-[FlowRateCalibration.3mf](CalibrationObjects/FlowRateCalibration.3mf) Make sure you import the models only (without importing profiles)!  
+### Calibrate Flow Rate 
+Scale the calibration cube so that minimum layer time is met. Line width can change when print speed increases.
 Wall Line Count = 2; 
 Top Layers = Bottom Layers = 0;  
 Infill Density = 0;    
-  
+ 
 Corrected Flow Rate = Existing flow rate * Desired wall thickness / actual wall thickness
 > Flow = 95/95;
 (https://all3dp.com/1/common-3d-printing-problems-troubleshooting-3d-printer-issues/)
@@ -139,6 +133,10 @@ Use long skirt line instead of extruding waste material with start Gcode.
 > Build Plate Adhesion Extruder = ; // Use the secondary/support extruder to first draw the inside skirt line. This cleans waste material the best.
 > Skirt/Brim Minimum Length = 0/3; // Use a value of 0 to disable left extruder brim for the Prime Tower
 > Skirt Line Count = 2; 
+
+### Calibrate Extruder Offset from each other
+Print the calibration object in folder "CalibrationObjects/DualExtruderCalibration".  
+Use Cura instead of Raise3D Pro2's console to apply these settings.
 
 ### Determine Max Overhang Angle and Minimize Support Structure
 [How to calculate maximum overhang angle](https://omni3d.com/blog/how-to-calculate-maximum-overhang-angle/)   
@@ -185,8 +183,9 @@ Skirt Minimum Length = 50mm;
 > Hole Horizontal Expansion = 0.1; //positive value makes bigger holes
 
 ### Miscellaneous Settings  
-> Maximum Resolution / Travel Resolution / Deviation / Minimum Polygon Circumference = 0.125mm;
-> Minimum Polygon Circumference = 0.016mm;
+> Maximum Resolution / Travel Resolution = 0.25mm; //https://www.cnckitchen.com/blog/removing-zits-and-blobs-on-your-3d-prints-adjust-your-slicing-resolution
+> Maximum Deviation = 0.05;
+> Minimum Polygon Circumference = 0.25mm;
 > Slicing Tolerance = Inclusive;  
 > Use Adaptive Layers = True; //set to false by default.
 > Adaptive Layers Maximum Variation = 0.05; //half of line height and ensure less than maximum layer height 
