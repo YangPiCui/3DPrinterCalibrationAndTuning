@@ -5,8 +5,8 @@ G21              ;Millimeter Units
 G90              ;Absolute Positioning
 M82              ;E Absolute
 
-M201 X150 Y150 Z100 E3000                        ;Set max print and retract acceleration in mm/s^2. 
-M204 P213 T213 R3000                          ;Set starting print, travel and retract accelaration
+M201 X100 Y100 Z100 E3000                        ;Set max print and retract acceleration in mm/s^2. 
+M204 P142 T142 R3000                          ;Set starting print, travel and retract accelaration
 M205 X4 Y4 Z0.5 E5                           ;Sets the max speed at which direction changes occur. 0 for infinite jerk.
 M500                                          ;save 
 
